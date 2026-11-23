@@ -2,20 +2,23 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بصريات النقاء - سجل الزبائن والقياسات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>بصريات النقاء | سجل الزبائن والقياسات</title>
   <style>
     :root {
-      --primary: #0f5c6e;
-      --primary-dark: #0a4250;
-      --accent: #198754;
-      --bg: #f4f7f8;
+      --primary: #0f4c81;
+      --primary-dark: #09355b;
+      --accent: #0d9488;
+      --accent-soft: #e6f7f5;
+      --bg: #f3f6fa;
       --card: #ffffff;
-      --text: #1e293b;
+      --text: #0f172a;
       --muted: #64748b;
-      --border: #dbe3e8;
+      --border: #dbe3ee;
       --danger: #dc2626;
-      --radius: 12px;
+      --danger-soft: #fef2f2;
+      --shadow: 0 6px 20px rgba(15, 76, 129, 0.08);
+      --radius: 14px;
     }
 
     * {
@@ -27,153 +30,56 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      padding-bottom: 40px;
+      padding-bottom: 48px;
     }
 
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: #fff;
       padding: 18px 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .header-inner {
-      max-width: 1000px;
+      max-width: 1040px;
       margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    header h1 {
+    .brand h1 {
       margin: 0;
-      font-size: 1.45rem;
+      font-size: 1.4rem;
     }
 
-    header p {
-      margin: 4px 0 0;
-      font-size: 0.9rem;
+    .brand p {
+      margin: 3px 0 0;
+      font-size: 0.85rem;
       opacity: 0.9;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 22px auto;
-      padding: 0 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-    }
-
-    .card h2 {
-      margin: 0 0 16px;
-      font-size: 1.15rem;
-      color: var(--primary);
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-    }
-
-    label {
-      display: block;
-      font-size: 0.88rem;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.95rem;
-      color: var(--text);
-      background: #fff;
-    }
-
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(15, 92, 110, 0.12);
-    }
-
-    textarea {
-      min-height: 75px;
-      resize: vertical;
-    }
-
-    .rx-table-wrap {
-      overflow-x: auto;
-      margin-top: 16px;
-    }
-
-    table.rx-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 520px;
-      direction: ltr;
-      text-align: center;
-    }
-
-    table.rx-table th,
-    table.rx-table td {
-      border: 1px solid var(--border);
-      padding: 8px;
-    }
-
-    table.rx-table th {
-      background: #eef5f7;
-      color: var(--primary-dark);
-      font-size: 0.88rem;
-    }
-
-    table.rx-table td.eye-label {
-      font-weight: 700;
-      background: #f8fafc;
-      color: var(--primary);
-      width: 60px;
-    }
-
-    table.rx-table input {
-      padding: 7px 8px;
-      text-align: center;
-      font-size: 0.92rem;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    button {
+    .btn {
       border: none;
-      border-radius: 8px;
-      padding: 10px 16px;
-      font-size: 0.95rem;
-      font-weight: 600;
+      border-radius: 10px;
+      padding: 10px 15px;
+      font-size: 0.94rem;
+      font-weight: 700;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: 0.18s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
     }
 
     .btn-primary {
@@ -185,436 +91,300 @@
       background: var(--primary-dark);
     }
 
-    .btn-secondary {
-      background: #e2e8f0;
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-light {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+
+    .btn-danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border: 1px solid #fecaca;
+    }
+
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: 0.85rem;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 22px auto;
+      padding: 0 16px;
+    }
+
+    .home-choices {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    @media (max-width: 680px) {
+      .home-choices {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .choice-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: 0.2s ease;
+    }
+
+    .choice-card.active {
+      border-color: var(--primary);
+      background: #f0f7ff;
+    }
+
+    .choice-card h2 {
+      margin: 8px 0 4px;
+      font-size: 1.18rem;
+      color: var(--primary);
+    }
+
+    .choice-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .choice-icon {
+      font-size: 1.8rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      margin: 0 0 16px;
+      font-size: 1.12rem;
+      color: var(--primary);
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 720px) {
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.88rem;
+      font-weight: 700;
       color: var(--text);
     }
 
-    .btn-backup {
-      background: rgba(255,255,255,0.16);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.35);
-      padding: 8px 12px;
-      font-size: 0.85rem;
+    .field input, .field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #fff;
     }
 
-    .btn-edit {
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 6px 12px;
-      font-size: 0.85rem;
+    .field input:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--primary);
     }
 
-    .btn-delete {
-      background: #fee2e2;
-      color: var(--danger);
-      padding: 6px 12px;
-      font-size: 0.85rem;
+    textarea {
+      min-height: 75px;
+      resize: vertical;
     }
 
-    .search-bar {
+    .rx-wrap {
+      margin-top: 16px;
+      overflow-x: auto;
+      border: 1.5px solid var(--border);
+      border-radius: 11px;
+    }
+
+    table.rx-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 540px;
+      direction: ltr;
+      text-align: center;
+    }
+
+    table.rx-table th {
+      background: #eef4fb;
+      color: var(--primary);
+      padding: 9px 6px;
+      font-size: 0.86rem;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    table.rx-table td {
+      padding: 7px 6px;
+      border-top: 1px solid #edf2f7;
+    }
+
+    table.rx-table td.eye-cell {
+      font-weight: 800;
+      background: #f8fafc;
+      color: var(--primary);
+      width: 54px;
+    }
+
+    table.rx-table input {
+      width: 100%;
+      padding: 7px 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      text-align: center;
+      font-size: 0.92rem;
+      direction: ltr;
+    }
+
+    .search-input-wrap {
       display: flex;
       gap: 10px;
       margin-bottom: 16px;
       flex-wrap: wrap;
     }
 
-    .search-bar input {
+    .search-input-wrap input {
       flex: 1;
       min-width: 220px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 11px;
+      font-size: 0.98rem;
     }
 
-    .record-item {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 14px;
-      background: #fcfdfd;
+    .customer-item {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      background: #fff;
+      overflow: hidden;
     }
 
-    .record-header {
+    .customer-name-btn {
+      width: 100%;
+      background: #f8fafc;
+      border: none;
+      padding: 14px 16px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
+      cursor: pointer;
+      text-align: right;
       gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
     }
 
-    .record-title {
-      font-size: 1.08rem;
-      font-weight: 700;
-      color: var(--primary-dark);
+    .customer-name-btn:hover {
+      background: #eef4fa;
     }
 
-    .record-phone {
+    .c-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .c-sub {
+      font-size: 0.88rem;
       color: var(--muted);
-      font-size: 0.92rem;
+      direction: ltr;
+      text-align: right;
       margin-top: 2px;
     }
 
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 8px;
-      font-size: 0.88rem;
-      margin: 10px 0;
-      background: #f8fafc;
-      padding: 10px;
-      border-radius: 8px;
+    .c-tag {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
     }
 
-    .empty-state {
-      text-align: center;
-      color: var(--muted);
-      padding: 24px;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="header-inner">
-      <div>
-        <h1>بصريات النقاء</h1>
-        <p>نظام حفظ بيانات الزبائن وقياسات النظارات</p>
-      </div>
-      <div class="actions" style="margin:0;">
-        <button class="btn-backup" onclick="exportData()">تصدير نسخة احتياطية</button>
-        <button class="btn-backup" onclick="document.getElementById('importFile').click()">استيراد نسخة</button>
-        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" />
-      </div>
-    </div>
-  </header>
-
-  <div class="container">
-    <div class="card">
-      <h2 id="formTitle">إضافة زبون جديد</h2>
-      <form id="customerForm" onsubmit="saveRecord(event)">
-        <input type="hidden" id="editId" />
-
-        <div class="grid-2">
-          <div>
-            <label for="name">اسم الزبون *</label>
-            <input type="text" id="name" required placeholder="أدخل اسم الزبون" />
-          </div>
-          <div>
-            <label for="phone">رقم التليفون *</label>
-            <input type="tel" id="phone" required placeholder="أدخل رقم التليفون" />
-          </div>
-        </div>
-
-        <div class="grid-3" style="margin-top:14px;">
-          <div>
-            <label for="date">التاريخ</label>
-            <input type="date" id="date" />
-          </div>
-          <div>
-            <label for="price">السعر</label>
-            <input type="text" id="price" placeholder="مثال: 50" />
-          </div>
-          <div>
-            <label for="branch">الفرع</label>
-            <input type="text" id="branch" placeholder="اسم الفرع" />
-          </div>
-        </div>
-
-        <div class="grid-2" style="margin-top:14px;">
-          <div>
-            <label for="lensFrame">تفاصيل العدسة والإطار</label>
-            <input type="text" id="lensFrame" placeholder="نوع العدسة وتفاصيل الإطار" />
-          </div>
-          <div>
-            <label for="employee">الموظف</label>
-            <input type="text" id="employee" placeholder="اسم الموظف" />
-          </div>
-        </div>
-
-        <div class="rx-table-wrap">
-          <table class="rx-table">
-            <thead>
-              <tr>
-                <th>EYE</th>
-                <th>SPH</th>
-                <th>CYL</th>
-                <th>AXIS</th>
-                <th>ADD</th>
-                <th>IPD</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="eye-label">R</td>
-                <td><input type="text" id="r_sph" /></td>
-                <td><input type="text" id="r_cyl" /></td>
-                <td><input type="text" id="r_axis" /></td>
-                <td><input type="text" id="r_add" /></td>
-                <td><input type="text" id="r_ipd" /></td>
-              </tr>
-              <tr>
-                <td class="eye-label">L</td>
-                <td><input type="text" id="l_sph" /></td>
-                <td><input type="text" id="l_cyl" /></td>
-                <td><input type="text" id="l_axis" /></td>
-                <td><input type="text" id="l_add" /></td>
-                <td><input type="text" id="l_ipd" /></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div style="margin-top:14px;">
-          <label for="notes">ملاحظات</label>
-          <textarea id="notes" placeholder="أي ملاحظات إضافية..."></textarea>
-        </div>
-
-        <div class="actions">
-          <button type="submit" class="btn-primary" id="submitBtn">حفظ السجل</button>
-          <button type="button" class="btn-secondary" onclick="resetForm()">تفريغ الحقول</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="card">
-      <h2>سجل الزبائن (<span id="count">0</span>)</h2>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="ابحث بالاسم أو رقم التليفون..." oninput="renderRecords()" />
-      </div>
-      <div id="recordsList"></div>
-    </div>
-  </div>
-
-  <script>
-    const STORAGE_KEY = 'naqaa_optics_records_v1';
-    let records = [];
-
-    function loadRecords() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        records = saved ? JSON.parse(saved) : [];
-      } catch (e) {
-        records = [];
-      }
+    .customer-panel {
+      display: none;
+      padding: 16px;
+      border-top: 1.5px solid var(--border);
+      background: #fff;
     }
 
-    function persistRecords() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    .customer-panel.open {
+      display: block;
     }
 
-    function setTodayDate() {
-      const dateInput = document.getElementById('date');
-      if (!dateInput.value) {
-        dateInput.value = new Date().toISOString().split('T')[0];
-      }
+    .profile-header-info {
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.94rem;
     }
 
-    function saveRecord(e) {
-      e.preventDefault();
-      const editId = document.getElementById('editId').value;
-
-      const record = {
-        id: editId || String(Date.now()),
-        name: document.getElementById('name').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        date: document.getElementById('date').value,
-        price: document.getElementById('price').value.trim(),
-        branch: document.getElementById('branch').value.trim(),
-        lensFrame: document.getElementById('lensFrame').value.trim(),
-        employee: document.getElementById('employee').value.trim(),
-        notes: document.getElementById('notes').value.trim(),
-        rx: {
-          R: {
-            sph: document.getElementById('r_sph').value.trim(),
-            cyl: document.getElementById('r_cyl').value.trim(),
-            axis: document.getElementById('r_axis').value.trim(),
-            add: document.getElementById('r_add').value.trim(),
-            ipd: document.getElementById('r_ipd').value.trim()
-          },
-          L: {
-            sph: document.getElementById('l_sph').value.trim(),
-            cyl: document.getElementById('l_cyl').value.trim(),
-            axis: document.getElementById('l_axis').value.trim(),
-            add: document.getElementById('l_add').value.trim(),
-            ipd: document.getElementById('l_ipd').value.trim()
-          }
-        }
-      };
-
-      if (editId) {
-        records = records.map(item => item.id === editId ? record : item);
-      } else {
-        records.unshift(record);
-      }
-
-      persistRecords();
-      resetForm();
-      renderRecords();
+    .glasses-box {
+      border: 1px solid #dbe3ee;
+      background: #fafbfd;
+      border-radius: 11px;
+      padding: 14px;
+      margin-bottom: 14px;
     }
 
-    function editRecord(id) {
-      const item = records.find(r => r.id === id);
-      if (!item) return;
-
-      document.getElementById('editId').value = item.id;
-      document.getElementById('name').value = item.name || '';
-      document.getElementById('phone').value = item.phone || '';
-      document.getElementById('date').value = item.date || '';
-      document.getElementById('price').value = item.price || '';
-      document.getElementById('branch').value = item.branch || '';
-      document.getElementById('lensFrame').value = item.lensFrame || '';
-      document.getElementById('employee').value = item.employee || '';
-      document.getElementById('notes').value = item.notes || '';
-
-      document.getElementById('r_sph').value = item.rx?.R?.sph || '';
-      document.getElementById('r_cyl').value = item.rx?.R?.cyl || '';
-      document.getElementById('r_axis').value = item.rx?.R?.axis || '';
-      document.getElementById('r_add').value = item.rx?.R?.add || '';
-      document.getElementById('r_ipd').value = item.rx?.R?.ipd || '';
-
-      document.getElementById('l_sph').value = item.rx?.L?.sph || '';
-      document.getElementById('l_cyl').value = item.rx?.L?.cyl || '';
-      document.getElementById('l_axis').value = item.rx?.L?.axis || '';
-      document.getElementById('l_add').value = item.rx?.L?.add || '';
-      document.getElementById('l_ipd').value = item.rx?.L?.ipd || '';
-
-      document.getElementById('formTitle').textContent = 'تعديل بيانات الزبون';
-      document.getElementById('submitBtn').textContent = 'تحديث السجل';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function deleteRecord(id) {
-      if (!confirm('هل أنتِ متأكدة من حذف هذا السجل؟')) return;
-      records = records.filter(r => r.id !== id);
-      persistRecords();
-      renderRecords();
-    }
-
-    function resetForm() {
-      document.getElementById('customerForm').reset();
-      document.getElementById('editId').value = '';
-      document.getElementById('formTitle').textContent = 'إضافة زبون جديد';
-      document.getElementById('submitBtn').textContent = 'حفظ السجل';
-      setTodayDate();
-    }
-
-    function escapeHtml(text) {
-      return String(text || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function renderRecords() {
-      const query = document.getElementById('searchInput').value.trim().toLowerCase();
-      const filtered = records.filter(r =>
-        (r.name || '').toLowerCase().includes(query) ||
-        (r.phone || '').toLowerCase().includes(query)
-      );
-
-      document.getElementById('count').textContent = filtered.length;
-      const container = document.getElementById('recordsList');
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="empty-state">لا توجد سجلات مطابقة.</div>';
-        return;
-      }
-
-      container.innerHTML = filtered.map(r => `
-        <div class="record-item">
-          <div class="record-header">
-            <div>
-              <div class="record-title">${escapeHtml(r.name)}</div>
-              <div class="record-phone">📞 ${escapeHtml(r.phone)}</div>
-            </div>
-            <div class="actions" style="margin:0;">
-              <button class="btn-edit" onclick="editRecord('${r.id}')">تعديل</button>
-              <button class="btn-delete" onclick="deleteRecord('${r.id}')">حذف</button>
-            </div>
-          </div>
-
-          <div class="meta-grid">
-            <div><strong>التاريخ:</strong> ${escapeHtml(r.date || '-')}</div>
-            <div><strong>السعر:</strong> ${escapeHtml(r.price || '-')}</div>
-            <div><strong>الفرع:</strong> ${escapeHtml(r.branch || '-')}</div>
-            <div><strong>الموظف:</strong> ${escapeHtml(r.employee || '-')}</div>
-            <div style="grid-column: 1 / -1;"><strong>العدسة والإطار:</strong> ${escapeHtml(r.lensFrame || '-')}</div>
-            <div style="grid-column: 1 / -1;"><strong>ملاحظات:</strong> ${escapeHtml(r.notes || '-')}</div>
-          </div>
-
-          <div class="rx-table-wrap">
-            <table class="rx-table">
-              <thead>
-                <tr>
-                  <th>EYE</th>
-                  <th>SPH</th>
-                  <th>CYL</th>
-                  <th>AXIS</th>
-                  <th>ADD</th>
-                  <th>IPD</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="eye-label">R</td>
-                  <td>${escapeHtml(r.rx?.R?.sph || '-')}</td>
-                  <td>${escapeHtml(r.rx?.R?.cyl || '-')}</td>
-                  <td>${escapeHtml(r.rx?.R?.axis || '-')}</td>
-                  <td>${escapeHtml(r.rx?.R?.add || '-')}</td>
-                  <td>${escapeHtml(r.rx?.R?.ipd || '-')}</td>
-                </tr>
-                <tr>
-                  <td class="eye-label">L</td>
-                  <td>${escapeHtml(r.rx?.L?.sph || '-')}</td>
-                  <td>${escapeHtml(r.rx?.L?.cyl || '-')}</td>
-                  <td>${escapeHtml(r.rx?.L?.axis || '-')}</td>
-                  <td>${escapeHtml(r.rx?.L?.add || '-')}</td>
-                  <td>${escapeHtml(r.rx?.L?.ipd || '-')}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function exportData() {
-      const dataStr = JSON.stringify(records, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `naqaa-optics-backup-${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importData(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const imported = JSON.parse(e.target.result);
-          if (!Array.isArray(imported)) {
-            alert('ملف النسخة الاحتياطية غير صالح.');
-            return;
-          }
-          records = imported;
-          persistRecords();
-          renderRecords();
-          alert('تم استيراد النسخة الاحتياطية بنجاح.');
-        } catch (err) {
-          alert('حدث خطأ أثناء قراءة الملف.');
-        }
-      };
-      reader.readAsText(file);
-      event.target.value = '';
-    }
-
-    loadRecords();
-    setTodayDate();
-    renderRecords();
-  </script>
-</body>
-</html>
+    .glasses-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      
