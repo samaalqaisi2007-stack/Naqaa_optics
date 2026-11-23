@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>بصريات النقاء | سجل الزبائن والقياسات</title>
+  <title>بصريات النقاء | سجل الزبائن</title>
   <style>
     :root {
-      --primary: #0f4c81;
-      --primary-light: #1e6bb8;
-      --accent: #0d9488;
-      --accent-soft: #e6f7f5;
-      --bg: #f4f7fb;
+      --primary: #155e75;
+      --primary-dark: #0e4354;
+      --accent: #0f766e;
+      --bg: #f1f5f9;
       --card: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --border: #dbe3ee;
-      --danger: #dc2626;
-      --danger-soft: #fef2f2;
-      --warning: #d97706;
-      --shadow: 0 4px 16px rgba(15, 76, 129, 0.08);
-      --radius: 14px;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --soft: #f8fafc;
+      --radius: 12px;
     }
 
     * {
@@ -31,73 +29,49 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      padding-bottom: 40px;
+      padding-bottom: 48px;
     }
 
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    .topbar {
+      background: var(--primary);
       color: #fff;
-      padding: 18px 20px;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+      padding: 16px 20px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 50;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
     }
 
-    .header-inner {
-      max-width: 1100px;
+    .topbar-inner {
+      max-width: 1020px;
       margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .brand h1 {
+    .topbar h1 {
       margin: 0;
-      font-size: 1.45rem;
-      letter-spacing: 0.2px;
+      font-size: 1.35rem;
     }
 
-    .brand p {
-      margin: 3px 0 0;
+    .topbar span {
       font-size: 0.85rem;
       opacity: 0.9;
     }
 
-    .backup-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
     .btn {
       border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.92rem;
+      border-radius: 9px;
+      padding: 9px 14px;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
-      transition: 0.2s ease;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn-light {
-      background: rgba(255, 255, 255, 0.16);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-light:hover {
-      background: rgba(255, 255, 255, 0.25);
     }
 
     .btn-primary {
@@ -106,7 +80,7 @@
     }
 
     .btn-primary:hover {
-      background: var(--primary-light);
+      background: var(--primary-dark);
     }
 
     .btn-accent {
@@ -114,70 +88,65 @@
       color: #fff;
     }
 
-    .btn-accent:hover {
-      opacity: 0.92;
+    .btn-light {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
     }
 
     .btn-outline {
       background: #fff;
-      color: var(--primary);
-      border: 1.5px solid var(--primary);
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
     .btn-danger {
-      background: var(--danger-soft);
+      background: var(--danger-bg);
       color: var(--danger);
       border: 1px solid #fecaca;
     }
 
     .btn-sm {
-      padding: 6px 10px;
-      font-size: 0.82rem;
-      border-radius: 8px;
+      padding: 6px 11px;
+      font-size: 0.83rem;
     }
 
-    .container {
-      max-width: 1100px;
+    .wrap {
+      max-width: 1020px;
       margin: 20px auto;
       padding: 0 16px;
     }
 
     .card {
       background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      border-radius: var(--radius);
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
     }
 
-    .section-title {
-      margin: 0 0 14px;
-      font-size: 1.15rem;
+    .card-title {
+      margin: 0 0 16px;
+      font-size: 1.1rem;
       color: var(--primary);
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
       gap: 8px;
-      border-bottom: 2px solid #edf2f7;
-      padding-bottom: 10px;
     }
 
-    .grid-2 {
+    .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
     }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 720px) {
-      .grid-2, .grid-3 {
+    @media (max-width: 680px) {
+      .form-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -188,460 +157,307 @@
       gap: 5px;
     }
 
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
     .field label {
       font-size: 0.86rem;
       font-weight: 600;
-      color: var(--text);
+      color: var(--muted);
     }
 
-    .field input, .field textarea, .field select {
+    .field input, .field textarea {
       width: 100%;
       padding: 10px 12px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-size: 0.96rem;
-      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: 0.95rem;
       color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
+      background: #fff;
     }
 
     .field input:focus, .field textarea:focus {
+      outline: none;
       border-color: var(--primary);
     }
 
-    .customer-base-box {
-      background: #f8fbff;
-      border: 1.5px solid #cfe0f5;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 18px;
-    }
-
-    .customer-base-badge {
-      display: inline-block;
-      background: var(--primary);
-      color: #fff;
-      font-size: 0.78rem;
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .glasses-block {
-      border: 2px solid #d5e5f2;
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-      background: #ffffff;
-      position: relative;
-    }
-
-    .glasses-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed var(--border);
-    }
-
-    .glasses-title {
-      font-weight: 700;
-      color: var(--accent);
-      font-size: 1.02rem;
-    }
-
-    .rx-wrapper {
+    .rx-box {
+      margin-top: 16px;
       overflow-x: auto;
-      margin-top: 14px;
+      border: 1px solid var(--border);
       border-radius: 10px;
-      border: 1.5px solid var(--border);
     }
 
-    table.rx-table {
+    .rx-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 520px;
+      min-width: 500px;
       direction: ltr;
       text-align: center;
     }
 
-    table.rx-table th {
-      background: #eef4fb;
+    .rx-table th {
+      background: var(--soft);
       color: var(--primary);
-      font-weight: 700;
       padding: 9px 6px;
-      font-size: 0.86rem;
-      border-bottom: 1.5px solid var(--border);
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    table.rx-table td {
+    .rx-table td {
       padding: 7px 6px;
-      border-bottom: 1px solid #edf2f7;
+      border-top: 1px solid #f1f5f9;
     }
 
-    table.rx-table td.eye-label {
-      font-weight: 800;
-      color: var(--primary);
-      background: #f8fafc;
-      width: 54px;
+    .rx-table td.eye {
+      font-weight: 700;
+      background: var(--soft);
+      width: 52px;
     }
 
-    table.rx-table input {
+    .rx-table input {
       width: 100%;
       padding: 7px 6px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid var(--border);
       border-radius: 7px;
       text-align: center;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       direction: ltr;
     }
 
-    table.rx-table input:focus {
-      border-color: var(--accent);
-      outline: none;
-    }
-
-    .form-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    .actions-row {
       margin-top: 16px;
-      align-items: center;
-    }
-
-    .search-box {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
     }
 
-    .search-box input {
+    .search-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-row input {
       flex: 1;
-      min-width: 220px;
-      padding: 12px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      font-size: 1rem;
+      min-width: 200px;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: 0.95rem;
     }
 
-    .stats-pill {
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-    }
-
-    .customer-item {
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 14px;
+    .customer-row {
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      margin-bottom: 12px;
       background: #fff;
-      transition: box-shadow 0.2s;
+      overflow: hidden;
     }
 
-    .customer-item:hover {
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-    }
-
-    .customer-top {
+    .customer-trigger {
+      width: 100%;
+      background: var(--soft);
+      border: none;
+      padding: 14px 16px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
+      align-items: center;
+      cursor: pointer;
+      text-align: right;
       gap: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #edf2f7;
     }
 
-    .customer-name {
-      font-size: 1.12rem;
+    .customer-trigger:hover {
+      background: #eef2f6;
+    }
+
+    .c-main {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .c-name {
       font-weight: 700;
+      font-size: 1.03rem;
       color: var(--primary);
-      margin: 0;
     }
 
-    .customer-phone {
+    .c-phone {
+      font-size: 0.88rem;
       color: var(--muted);
-      font-size: 0.95rem;
-      margin-top: 3px;
       direction: ltr;
       text-align: right;
     }
 
-    .customer-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+    .c-badge {
+      font-size: 0.82rem;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
     }
 
-    .saved-glasses-card {
-      background: #f9fbfd;
+    .customer-details {
+      display: none;
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .customer-details.open {
+      display: block;
+    }
+
+    .glasses-card {
       border: 1px solid #e2e8f0;
+      background: #fafbfd;
       border-radius: 10px;
-      padding: 12px;
-      margin-top: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
     }
 
-    .saved-glasses-head {
+    .glasses-top {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 0.94rem;
-    }
-
-    .meta-tags {
-      display: flex;
+      align-items: center;
       flex-wrap: wrap;
       gap: 8px;
       margin-bottom: 8px;
-      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 0.92rem;
     }
 
-    .meta-tag {
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 8px;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+    }
+
+    .info-item {
       background: #fff;
-      border: 1px solid var(--border);
-      padding: 4px 9px;
+      border: 1px solid #e2e8f0;
+      padding: 7px 10px;
       border-radius: 8px;
     }
 
-    .mini-rx {
+    .view-rx {
       width: 100%;
       border-collapse: collapse;
       direction: ltr;
       text-align: center;
       font-size: 0.84rem;
       background: #fff;
-      margin-top: 6px;
     }
 
-    .mini-rx th, .mini-rx td {
-      border: 1px solid #dbe3ee;
+    .view-rx th, .view-rx td {
+      border: 1px solid #cbd5e1;
       padding: 5px;
     }
 
-    .mini-rx th {
-      background: #eef4fb;
+    .view-rx th {
+      background: var(--soft);
       color: var(--primary);
     }
 
-    .empty-state {
-      text-align: center;
-      padding: 28px 12px;
-      color: var(--muted);
+    .customer-footer-actions {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0f172a;
-      color: #fff;
-      padding: 11px 18px;
-      border-radius: 10px;
-      font-size: 0.92rem;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-      z-index: 999;
+    .add-glasses-drawer {
       display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border: 1.5px solid var(--accent);
+      border-radius: 10px;
+      background: #f0fdfa;
+    }
+
+    .add-glasses-drawer.open {
+      display: block;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="brand">
+<header class="topbar">
+  <div class="topbar-inner">
+    <div>
       <h1>بصريات النقاء</h1>
-      <p>نظام إدارة الزبائن وسجل قياسات النظارات</p>
+      <span>سجل الزبائن والقياسات</span>
     </div>
-    <div class="backup-bar">
-      <button type="button" class="btn btn-light btn-sm" onclick="exportJSON()">⬇️ تصدير نسخة احتياطية</button>
-      <button type="button" class="btn btn-light btn-sm" onclick="document.getElementById('importFile').click()">⬆️ استيراد نسخة</button>
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)" />
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button type="button" class="btn btn-light btn-sm" onclick="exportData()">تصدير JSON</button>
+      <button type="button" class="btn btn-light btn-sm" onclick="document.getElementById('importInput').click()">استيراد JSON</button>
+      <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)" />
     </div>
   </div>
 </header>
 
-<div class="container">
-
-  <!-- نموذج إضافة / تعديل زبون -->
-  <div class="card" id="formCard">
-    <div class="section-title">
-      <span id="formTitle">إضافة سجل زبون جديد</span>
-      <button type="button" class="btn btn-outline btn-sm" id="cancelEditBtn" style="display:none" onclick="resetForm()">إلغاء التعديل</button>
-    </div>
-
-    <form id="customerForm" onsubmit="saveCustomer(event)">
-      <input type="hidden" id="editCustomerId" value="" />
-
-      <!-- بيانات الزبون الأساسية (مرة واحدة) -->
-      <div class="customer-base-box">
-        <div class="customer-base-badge">بيانات الزبون الأساسية</div>
-        <div class="grid-2">
-          <div class="field">
-            <label for="customerName">اسم الزبون *</label>
-            <input type="text" id="customerName" required placeholder="مثال: محمد أحمد" />
-          </div>
-          <div class="field">
-            <label for="customerPhone">رقم التليفون *</label>
-            <input type="tel" id="customerPhone" required placeholder="مثال: 0790000000" />
-          </div>
-        </div>
-      </div>
-
-      <!-- قائمة نظارات الزبون -->
-      <div id="glassesContainer"></div>
-
-      <div class="form-actions">
-        <button type="button" class="btn btn-accent" onclick="addGlassesBlock()">➕ إضافة نظارة أخرى لهذا الزبون</button>
-        <button type="submit" class="btn btn-primary">💾 حفظ بيانات الزبون والنظارات</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- البحث والسجلات -->
+<div class="wrap">
+  <!-- نموذج إضافة زبون جديد -->
   <div class="card">
-    <div class="section-title">
-      <span>سجل الزبائن المحفوظ</span>
-      <span class="stats-pill" id="customerCount">0 زبون</span>
+    <div class="card-title">
+      <span>إضافة زبون جديد</span>
     </div>
-
-    <div class="search-box" style="margin-bottom: 16px;">
-      <input type="text" id="searchInput" placeholder="ابحث باسم الزبون أو رقم التليفون..." oninput="renderCustomers()" />
-      <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('searchInput').value=''; renderCustomers();">مسح البحث</button>
-    </div>
-
-    <div id="customersList"></div>
-  </div>
-
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-  const STORAGE_KEY = 'naqaa_optics_customers_v1';
-  let customers = [];
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
-    clearTimeout(window._toastTimer);
-    window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2800);
-  }
-
-  function todayISO() {
-    const d = new Date();
-    return d.toISOString().split('T')[0];
-  }
-
-  // ترقية السجلات القديمة تلقائياً لصيغة تعدد النظارات دون فقدان أي معلومة
-  function normalizeCustomer(c) {
-    if (Array.isArray(c.glasses) && c.glasses.length > 0) {
-      return c;
-    }
-    return {
-      id: c.id || Date.now().toString(),
-      name: c.name || '',
-      phone: c.phone || '',
-      glasses: [
-        {
-          date: c.date || todayISO(),
-          lensFrame: c.lensFrame || c.details || '',
-          price: c.price || '',
-          branch: c.branch || '',
-          employee: c.employee || '',
-          notes: c.notes || '',
-          rx: c.rx || {
-            R: { sph: '', cyl: '', axis: '', add: '', ipd: '' },
-            L: { sph: '', cyl: '', axis: '', add: '', ipd: '' }
-          }
-        }
-      ]
-    };
-  }
-
-  function loadData() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const parsed = raw ? JSON.parse(raw) : [];
-      customers = Array.isArray(parsed) ? parsed.map(normalizeCustomer) : [];
-    } catch (e) {
-      customers = [];
-    }
-  }
-
-  function persistData() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
-  }
-
-  function createEmptyGlasses() {
-    return {
-      date: todayISO(),
-      lensFrame: '',
-      price: '',
-      branch: '',
-      employee: '',
-      notes: '',
-      rx: {
-        R: { sph: '', cyl: '', axis: '', add: '', ipd: '' },
-        L: { sph: '', cyl: '', axis: '', add: '', ipd: '' }
-      }
-    };
-  }
-
-  function addGlassesBlock(data = null) {
-    const g = data || createEmptyGlasses();
-    const container = document.getElementById('glassesContainer');
-    const block = document.createElement('div');
-    block.className = 'glasses-block';
-
-    block.innerHTML = `
-      <div class="glasses-header">
-        <span class="glasses-title">👓 النظارة رقم <span class="g-num"></span></span>
-        <button type="button" class="btn btn-danger btn-sm remove-glasses-btn" onclick="removeGlassesBlock(this)">🗑️ حذف هذه النظارة</button>
-      </div>
-
-      <div class="grid-3">
+    <form id="newCustomerForm" onsubmit="addNewCustomer(event)">
+      <div class="form-grid">
         <div class="field">
-          <label>التاريخ</label>
-          <input type="date" class="g-date" value="${escapeAttr(g.date || todayISO())}" />
+          <label for="newName">اسم الزبون</label>
+          <input type="text" id="newName" required placeholder="الاسم الكامل" />
         </div>
         <div class="field">
-          <label>تفاصيل العدسة والإطار</label>
-          <input type="text" class="g-lensFrame" value="${escapeAttr(g.lensFrame || '')}" placeholder="مثال: عدسة بلوكت + إطار طبي" />
+          <label for="newPhone">رقم التليفون</label>
+          <input type="tel" id="newPhone" required placeholder="رقم الهاتف" />
         </div>
         <div class="field">
-          <label>السعر</label>
-          <input type="text" class="g-price" value="${escapeAttr(g.price || '')}" placeholder="مثال: 45 دينار" />
+          <label for="newDate">التاريخ</label>
+          <input type="date" id="newDate" />
         </div>
         <div class="field">
-          <label>الفرع</label>
-          <input type="text" class="g-branch" value="${escapeAttr(g.branch || '')}" placeholder="اسم الفرع" />
+          <label for="newPrice">السعر</label>
+          <input type="text" id="newPrice" placeholder="السعر" />
         </div>
         <div class="field">
-          <label>الموظف</label>
-          <input type="text" class="g-employee" value="${escapeAttr(g.employee || '')}" placeholder="اسم الموظف" />
+          <label for="newLensFrame">تفاصيل العدسة والإطار</label>
+          <input type="text" id="newLensFrame" placeholder="نوع العدسة والإطار" />
         </div>
         <div class="field">
-          <label>ملاحظات</label>
-          <input type="text" class="g-notes" value="${escapeAttr(g.notes || '')}" placeholder="أي ملاحظات إضافية..." />
+          <label for="newBranch">الفرع</label>
+          <input type="text" id="newBranch" placeholder="الفرع" />
+        </div>
+        <div class="field">
+          <label for="newEmployee">الموظف</label>
+          <input type="text" id="newEmployee" placeholder="اسم الموظف" />
+        </div>
+        <div class="field">
+          <label for="newNotes">الملاحظات</label>
+          <input type="text" id="newNotes" placeholder="ملاحظات" />
         </div>
       </div>
 
-      <div class="rx-wrapper">
-        <table class="rx-table">
+      <div class="rx-box">
+        <table class="rx-table" id="newRxTable">
           <thead>
             <tr>
               <th>EYE</th>
@@ -654,204 +470,260 @@
           </thead>
           <tbody>
             <tr>
-              <td class="eye-label">R</td>
-              <td><input type="text" class="r-sph" value="${escapeAttr(g.rx?.R?.sph || '')}" placeholder="0.00" /></td>
-              <td><input type="text" class="r-cyl" value="${escapeAttr(g.rx?.R?.cyl || '')}" placeholder="0.00" /></td>
-              <td><input type="text" class="r-axis" value="${escapeAttr(g.rx?.R?.axis || '')}" placeholder="180" /></td>
-              <td><input type="text" class="r-add" value="${escapeAttr(g.rx?.R?.add || '')}" placeholder="+0.00" /></td>
-              <td><input type="text" class="r-ipd" value="${escapeAttr(g.rx?.R?.ipd || '')}" placeholder="32" /></td>
+              <td class="eye">R</td>
+              <td><input type="text" data-eye="R" data-field="sph" /></td>
+              <td><input type="text" data-eye="R" data-field="cyl" /></td>
+              <td><input type="text" data-eye="R" data-field="axis" /></td>
+              <td><input type="text" data-eye="R" data-field="add" /></td>
+              <td><input type="text" data-eye="R" data-field="ipd" /></td>
             </tr>
             <tr>
-              <td class="eye-label">L</td>
-              <td><input type="text" class="l-sph" value="${escapeAttr(g.rx?.L?.sph || '')}" placeholder="0.00" /></td>
-              <td><input type="text" class="l-cyl" value="${escapeAttr(g.rx?.L?.cyl || '')}" placeholder="0.00" /></td>
-              <td><input type="text" class="l-axis" value="${escapeAttr(g.rx?.L?.axis || '')}" placeholder="180" /></td>
-              <td><input type="text" class="l-add" value="${escapeAttr(g.rx?.L?.add || '')}" placeholder="+0.00" /></td>
-              <td><input type="text" class="l-ipd" value="${escapeAttr(g.rx?.L?.ipd || '')}" placeholder="32" /></td>
+              <td class="eye">L</td>
+              <td><input type="text" data-eye="L" data-field="sph" /></td>
+              <td><input type="text" data-eye="L" data-field="cyl" /></td>
+              <td><input type="text" data-eye="L" data-field="axis" /></td>
+              <td><input type="text" data-eye="L" data-field="add" /></td>
+              <td><input type="text" data-eye="L" data-field="ipd" /></td>
             </tr>
           </tbody>
         </table>
       </div>
-    `;
 
-    container.appendChild(block);
-    updateGlassesNumbers();
+      <div class="actions-row">
+        <button type="submit" class="btn btn-primary">حفظ الزبون</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- البحث وعرض الزبائن -->
+  <div class="card">
+    <div class="card-title">
+      <span>الزبائن المحفوظون</span>
+      <span id="totalCount" style="font-size:0.88rem; color:var(--muted);">0</span>
+    </div>
+
+    <div class="search-row">
+      <input type="text" id="searchBox" placeholder="بحث بالاسم أو رقم التليفون..." oninput="renderList()" />
+      <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('searchBox').value=''; renderList();">مسح</button>
+    </div>
+
+    <div id="customersContainer"></div>
+  </div>
+</div>
+
+<script>
+  const KEY = 'naqaa_optics_data_v1';
+  let data = [];
+  let openCustomerIds = new Set();
+  let openAddGlassesIds = new Set();
+
+  function today() {
+    return new Date().toISOString().split('T')[0];
   }
 
-  function removeGlassesBlock(btn) {
-    const container = document.getElementById('glassesContainer');
-    if (container.children.length <= 1) {
-      showToast('يجب أن يحتوي الزبون على نظارة واحدة على الأقل');
-      return;
+  function emptyRx() {
+    return {
+      R: { sph: '', cyl: '', axis: '', add: '', ipd: '' },
+      L: { sph: '', cyl: '', axis: '', add: '', ipd: '' }
+    };
+  }
+
+  function normalize(item) {
+    if (Array.isArray(item.glasses)) return item;
+    return {
+      id: item.id || String(Date.now() + Math.random()),
+      name: item.name || '',
+      phone: item.phone || '',
+      glasses: [{
+        date: item.date || today(),
+        lensFrame: item.lensFrame || '',
+        price: item.price || '',
+        branch: item.branch || '',
+        employee: item.employee || '',
+        notes: item.notes || '',
+        rx: item.rx || emptyRx()
+      }]
+    };
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      data = Array.isArray(arr) ? arr.map(normalize) : [];
+    } catch {
+      data = [];
     }
-    btn.closest('.glasses-block').remove();
-    updateGlassesNumbers();
   }
 
-  function updateGlassesNumbers() {
-    const blocks = document.querySelectorAll('#glassesContainer .glasses-block');
-    blocks.forEach((b, idx) => {
-      b.querySelector('.g-num').textContent = (idx + 1);
-      const rmBtn = b.querySelector('.remove-glasses-btn');
-      rmBtn.style.display = blocks.length > 1 ? 'inline-flex' : 'none';
+  function save() {
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+
+  function readRxFromTable(tableEl) {
+    const rx = emptyRx();
+    tableEl.querySelectorAll('input[data-eye]').forEach(inp => {
+      const eye = inp.getAttribute('data-eye');
+      const field = inp.getAttribute('data-field');
+      rx[eye][field] = inp.value.trim();
     });
+    return rx;
   }
 
-  function collectGlassesFromForm() {
-    const blocks = document.querySelectorAll('#glassesContainer .glasses-block');
-    const list = [];
-    blocks.forEach(b => {
-      list.push({
-        date: b.querySelector('.g-date').value.trim(),
-        lensFrame: b.querySelector('.g-lensFrame').value.trim(),
-        price: b.querySelector('.g-price').value.trim(),
-        branch: b.querySelector('.g-branch').value.trim(),
-        employee: b.querySelector('.g-employee').value.trim(),
-        notes: b.querySelector('.g-notes').value.trim(),
-        rx: {
-          R: {
-            sph: b.querySelector('.r-sph').value.trim(),
-            cyl: b.querySelector('.r-cyl').value.trim(),
-            axis: b.querySelector('.r-axis').value.trim(),
-            add: b.querySelector('.r-add').value.trim(),
-            ipd: b.querySelector('.r-ipd').value.trim(),
-          },
-          L: {
-            sph: b.querySelector('.l-sph').value.trim(),
-            cyl: b.querySelector('.l-cyl').value.trim(),
-            axis: b.querySelector('.l-axis').value.trim(),
-            add: b.querySelector('.l-add').value.trim(),
-            ipd: b.querySelector('.l-ipd').value.trim(),
-          }
-        }
-      });
-    });
-    return list;
-  }
-
-  function saveCustomer(e) {
+  function addNewCustomer(e) {
     e.preventDefault();
-    const editId = document.getElementById('editCustomerId').value;
-    const name = document.getElementById('customerName').value.trim();
-    const phone = document.getElementById('customerPhone').value.trim();
-    const glasses = collectGlassesFromForm();
+    const name = document.getElementById('newName').value.trim();
+    const phone = document.getElementById('newPhone').value.trim();
+    if (!name || !phone) return;
 
-    if (!name || !phone) {
-      showToast('يرجى إدخال اسم الزبون ورقم التليفون');
+    const firstGlasses = {
+      date: document.getElementById('newDate').value || today(),
+      lensFrame: document.getElementById('newLensFrame').value.trim(),
+      price: document.getElementById('newPrice').value.trim(),
+      branch: document.getElementById('newBranch').value.trim(),
+      employee: document.getElementById('newEmployee').value.trim(),
+      notes: document.getElementById('newNotes').value.trim(),
+      rx: readRxFromTable(document.getElementById('newRxTable'))
+    };
+
+    data.unshift({
+      id: String(Date.now()),
+      name,
+      phone,
+      glasses: [firstGlasses]
+    });
+
+    save();
+    document.getElementById('newCustomerForm').reset();
+    document.getElementById('newDate').value = today();
+    renderList();
+  }
+
+  function toggleCustomer(id) {
+    if (openCustomerIds.has(id)) {
+      openCustomerIds.delete(id);
+    } else {
+      openCustomerIds.add(id);
+    }
+    renderList();
+  }
+
+  function toggleAddGlasses(id) {
+    openCustomerIds.add(id);
+    if (openAddGlassesIds.has(id)) {
+      openAddGlassesIds.delete(id);
+    } else {
+      openAddGlassesIds.add(id);
+    }
+    renderList();
+  }
+
+  function submitExtraGlasses(e, customerId) {
+    e.preventDefault();
+    const customer = data.find(c => c.id === customerId);
+    if (!customer) return;
+
+    const drawer = document.getElementById(`drawer-${customerId}`);
+    const extraGlasses = {
+      date: drawer.querySelector('.ex-date').value || today(),
+      lensFrame: drawer.querySelector('.ex-lensFrame').value.trim(),
+      price: drawer.querySelector('.ex-price').value.trim(),
+      branch: drawer.querySelector('.ex-branch').value.trim(),
+      employee: drawer.querySelector('.ex-employee').value.trim(),
+      notes: drawer.querySelector('.ex-notes').value.trim(),
+      rx: readRxFromTable(drawer.querySelector('.ex-rx-table'))
+    };
+
+    customer.glasses.push(extraGlasses);
+    openAddGlassesIds.delete(customerId);
+    openCustomerIds.add(customerId);
+    save();
+    renderList();
+  }
+
+  function deleteGlasses(customerId, index) {
+    const customer = data.find(c => c.id === customerId);
+    if (!customer) return;
+    if (customer.glasses.length <= 1) {
+      alert('يجب أن يبقى للزبون نظارة واحدة على الأقل، أو احذفي ملف الزبون بالكامل.');
       return;
     }
-
-    if (editId) {
-      const idx = customers.findIndex(c => c.id === editId);
-      if (idx !== -1) {
-        customers[idx] = { ...customers[idx], name, phone, glasses };
-        showToast('تم تحديث بيانات الزبون ونظاراته بنجاح');
-      }
-    } else {
-      customers.unshift({
-        id: Date.now().toString(),
-        name,
-        phone,
-        glasses
-      });
-      showToast('تم حفظ الزبون ونظاراته بنجاح');
-    }
-
-    persistData();
-    resetForm();
-    renderCustomers();
-  }
-
-  function resetForm() {
-    document.getElementById('editCustomerId').value = '';
-    document.getElementById('customerName').value = '';
-    document.getElementById('customerPhone').value = '';
-    document.getElementById('formTitle').textContent = 'إضافة سجل زبون جديد';
-    document.getElementById('cancelEditBtn').style.display = 'none';
-    const container = document.getElementById('glassesContainer');
-    container.innerHTML = '';
-    addGlassesBlock();
-  }
-
-  function editCustomer(id, appendNewGlasses = false) {
-    const c = customers.find(item => item.id === id);
-    if (!c) return;
-
-    document.getElementById('editCustomerId').value = c.id;
-    document.getElementById('customerName').value = c.name;
-    document.getElementById('customerPhone').value = c.phone;
-    document.getElementById('formTitle').textContent = appendNewGlasses
-      ? `إضافة نظارة جديدة للزبون: ${c.name}`
-      : `تعديل ملف الزبون: ${c.name}`;
-    document.getElementById('cancelEditBtn').style.display = 'inline-flex';
-
-    const container = document.getElementById('glassesContainer');
-    container.innerHTML = '';
-    c.glasses.forEach(g => addGlassesBlock(g));
-    if (appendNewGlasses) {
-      addGlassesBlock();
-    }
-
-    document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+    if (!confirm('هل تريدين حذف هذه النظارة؟')) return;
+    customer.glasses.splice(index, 1);
+    save();
+    renderList();
   }
 
   function deleteCustomer(id) {
-    if (!confirm('هل أنتِ متأكدة من حذف ملف هذا الزبون وجميع نظاراته؟')) return;
-    customers = customers.filter(c => c.id !== id);
-    persistData();
-    renderCustomers();
-    showToast('تم حذف سجل الزبون');
+    if (!confirm('هل تريدين حذف بيانات هذا الزبون بالكامل؟')) return;
+    data = data.filter(c => c.id !== id);
+    openCustomerIds.delete(id);
+    openAddGlassesIds.delete(id);
+    save();
+    renderList();
   }
 
-  function renderCustomers() {
-    const q = document.getElementById('searchInput').value.trim().toLowerCase();
-    const listEl = document.getElementById('customersList');
-    const filtered = customers.filter(c =>
+  function esc(v) {
+    return String(v ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function renderList() {
+    const q = document.getElementById('searchBox').value.trim().toLowerCase();
+    const container = document.getElementById('customersContainer');
+    const list = data.filter(c =>
       c.name.toLowerCase().includes(q) || c.phone.toLowerCase().includes(q)
     );
 
-    document.getElementById('customerCount').textContent = `${filtered.length} زبون`;
+    document.getElementById('totalCount').textContent = `عدد الزبائن: ${list.length}`;
 
-    if (filtered.length === 0) {
-      listEl.innerHTML = `<div class="empty-state">لا توجد سجلات مطابقة حالياً.</div>`;
+    if (list.length === 0) {
+      container.innerHTML = `<div class="empty">لا توجد سجلات لعرضها.</div>`;
       return;
     }
 
-    listEl.innerHTML = filtered.map(c => {
-      const glassesHTML = c.glasses.map((g, i) => `
-        <div class="saved-glasses-card">
-          <div class="saved-glasses-head">
-            <span>👓 نظارة رقم (${i + 1}) ${g.date ? '— ' + escapeHTML(g.date) : ''}</span>
-            <span>${g.price ? 'السعر: ' + escapeHTML(g.price) : ''}</span>
+    container.innerHTML = list.map(c => {
+      const isOpen = openCustomerIds.has(c.id);
+      const isAdding = openAddGlassesIds.has(c.id);
+
+      const glassesHtml = c.glasses.map((g, idx) => `
+        <div class="glasses-card">
+          <div class="glasses-top">
+            <span>نظارة #${idx + 1} — ${esc(g.date || '')}</span>
+            ${c.glasses.length > 1
+              ? `<button type="button" class="btn btn-danger btn-sm" onclick="deleteGlasses('${c.id}', ${idx})">حذف النظارة</button>`
+              : ''}
           </div>
-          <div class="meta-tags">
-            ${g.lensFrame ? `<span class="meta-tag"><strong>العدسة/الإطار:</strong> ${escapeHTML(g.lensFrame)}</span>` : ''}
-            ${g.branch ? `<span class="meta-tag"><strong>الفرع:</strong> ${escapeHTML(g.branch)}</span>` : ''}
-            ${g.employee ? `<span class="meta-tag"><strong>الموظف:</strong> ${escapeHTML(g.employee)}</span>` : ''}
-            ${g.notes ? `<span class="meta-tag"><strong>ملاحظات:</strong> ${escapeHTML(g.notes)}</span>` : ''}
+          <div class="info-grid">
+            <div class="info-item"><strong>العدسة والإطار:</strong> ${esc(g.lensFrame || '-')}</div>
+            <div class="info-item"><strong>السعر:</strong> ${esc(g.price || '-')}</div>
+            <div class="info-item"><strong>الفرع:</strong> ${esc(g.branch || '-')}</div>
+            <div class="info-item"><strong>الموظف:</strong> ${esc(g.employee || '-')}</div>
+            <div class="info-item"><strong>الملاحظات:</strong> ${esc(g.notes || '-')}</div>
           </div>
-          <table class="mini-rx">
+          <table class="view-rx">
             <thead>
-              <tr>
-                <th>EYE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>IPD</th>
-              </tr>
+              <tr><th>EYE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>IPD</th></tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>R</strong></td>
-                <td>${escapeHTML(g.rx?.R?.sph || '-')}</td>
-                <td>${escapeHTML(g.rx?.R?.cyl || '-')}</td>
-                <td>${escapeHTML(g.rx?.R?.axis || '-')}</td>
-                <td>${escapeHTML(g.rx?.R?.add || '-')}</td>
-                <td>${escapeHTML(g.rx?.R?.ipd || '-')}</td>
+                <td>${esc(g.rx?.R?.sph || '-')}</td>
+                <td>${esc(g.rx?.R?.cyl || '-')}</td>
+                <td>${esc(g.rx?.R?.axis || '-')}</td>
+                <td>${esc(g.rx?.R?.add || '-')}</td>
+                <td>${esc(g.rx?.R?.ipd || '-')}</td>
               </tr>
               <tr>
                 <td><strong>L</strong></td>
-                <td>${escapeHTML(g.rx?.L?.sph || '-')}</td>
-                <td>${escapeHTML(g.rx?.L?.cyl || '-')}</td>
-                <td>${escapeHTML(g.rx?.L?.axis || '-')}</td>
-                <td>${escapeHTML(g.rx?.L?.add || '-')}</td>
-                <td>${escapeHTML(g.rx?.L?.ipd || '-')}</td>
+                <td>${esc(g.rx?.L?.sph || '-')}</td>
+                <td>${esc(g.rx?.L?.cyl || '-')}</td>
+                <td>${esc(g.rx?.L?.axis || '-')}</td>
+                <td>${esc(g.rx?.L?.add || '-')}</td>
+                <td>${esc(g.rx?.L?.ipd || '-')}</td>
               </tr>
             </tbody>
           </table>
@@ -859,70 +731,130 @@
       `).join('');
 
       return `
-        <div class="customer-item">
-          <div class="customer-top">
-            <div>
-              <h3 class="customer-name">${escapeHTML(c.name)} <span style="font-size:0.82rem; color:var(--accent);">(${c.glasses.length} نظارة)</span></h3>
-              <div class="customer-phone">📞 ${escapeHTML(c.phone)}</div>
+        <div class="customer-row">
+          <button type="button" class="customer-trigger" onclick="toggleCustomer('${c.id}')">
+            <div class="c-main">
+              <span class="c-name">${esc(c.name)}</span>
+              <span class="c-phone">${esc(c.phone)}</span>
             </div>
-            <div class="customer-actions">
-              <button type="button" class="btn btn-accent btn-sm" onclick="editCustomer('${c.id}', true)">➕ نظارة جديدة</button>
-              <button type="button" class="btn btn-outline btn-sm" onclick="editCustomer('${c.id}', false)">✏️ تعديل</button>
-              <button type="button" class="btn btn-danger btn-sm" onclick="deleteCustomer('${c.id}')">🗑️ حذف</button>
+            <span class="c-badge">${c.glasses.length} نظارة ${isOpen ? '▲' : '▼'}</span>
+          </button>
+
+          <div class="customer-details ${isOpen ? 'open' : ''}">
+            ${glassesHtml}
+
+            <div class="customer-footer-actions">
+              <button type="button" class="btn btn-accent btn-sm" onclick="toggleAddGlasses('${c.id}')">
+                ➕ إضافة نظارة
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="deleteCustomer('${c.id}')">
+                حذف الزبون
+              </button>
+            </div>
+
+            <div class="add-glasses-drawer ${isAdding ? 'open' : ''}" id="drawer-${c.id}">
+              <form onsubmit="submitExtraGlasses(event, '${c.id}')">
+                <div style="font-weight:700; color:var(--accent); margin-bottom:10px;">
+                  بيانات نظارة جديدة للزبون: ${esc(c.name)}
+                </div>
+                <div class="form-grid">
+                  <div class="field">
+                    <label>التاريخ</label>
+                    <input type="date" class="ex-date" value="${today()}" />
+                  </div>
+                  <div class="field">
+                    <label>السعر</label>
+                    <input type="text" class="ex-price" placeholder="السعر" />
+                  </div>
+                  <div class="field">
+                    <label>تفاصيل العدسة والإطار</label>
+                    <input type="text" class="ex-lensFrame" placeholder="نوع العدسة والإطار" />
+                  </div>
+                  <div class="field">
+                    <label>الفرع</label>
+                    <input type="text" class="ex-branch" placeholder="الفرع" />
+                  </div>
+                  <div class="field">
+                    <label>الموظف</label>
+                    <input type="text" class="ex-employee" placeholder="اسم الموظف" />
+                  </div>
+                  <div class="field">
+                    <label>الملاحظات</label>
+                    <input type="text" class="ex-notes" placeholder="ملاحظات" />
+                  </div>
+                </div>
+
+                <div class="rx-box">
+                  <table class="rx-table ex-rx-table">
+                    <thead>
+                      <tr><th>EYE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>IPD</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="eye">R</td>
+                        <td><input type="text" data-eye="R" data-field="sph" /></td>
+                        <td><input type="text" data-eye="R" data-field="cyl" /></td>
+                        <td><input type="text" data-eye="R" data-field="axis" /></td>
+                        <td><input type="text" data-eye="R" data-field="add" /></td>
+                        <td><input type="text" data-eye="R" data-field="ipd" /></td>
+                      </tr>
+                      <tr>
+                        <td class="eye">L</td>
+                        <td><input type="text" data-eye="L" data-field="sph" /></td>
+                        <td><input type="text" data-eye="L" data-field="cyl" /></td>
+                        <td><input type="text" data-eye="L" data-field="axis" /></td>
+                        <td><input type="text" data-eye="L" data-field="add" /></td>
+                        <td><input type="text" data-eye="L" data-field="ipd" /></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="actions-row">
+                  <button type="submit" class="btn btn-accent btn-sm">حفظ النظارة الجديدة</button>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="toggleAddGlasses('${c.id}')">إلغاء</button>
+                </div>
+              </form>
             </div>
           </div>
-          ${glassesHTML}
         </div>
       `;
     }).join('');
   }
 
-  function exportJSON() {
-    const blob = new Blob([JSON.stringify(customers, null, 2)], { type: 'application/json' });
+  function exportData() {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `naqaa-optics-backup-${todayISO()}.json`;
+    a.download = `naqaa-optics-${today()}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    showToast('تم تنزيل النسخة الاحتياطية');
   }
 
-  function importJSON(event) {
-    const file = event.target.files[0];
+  function importData(e) {
+    const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = ev => {
       try {
-        const imported = JSON.parse(e.target.result);
-        if (!Array.isArray(imported)) throw new Error('Invalid format');
-        customers = imported.map(normalizeCustomer);
-        persistData();
-        renderCustomers();
-        showToast('تم استيراد البيانات بنجاح');
-      } catch (err) {
-        alert('ملف النسخة الاحتياطية غير صالح.');
+        const parsed = JSON.parse(ev.target.result);
+        if (!Array.isArray(parsed)) throw new Error();
+        data = parsed.map(normalize);
+        save();
+        renderList();
+        alert('تم الاستيراد بنجاح.');
+      } catch {
+        alert('تعذر قراءة الملف.');
       }
-      event.target.value = '';
+      e.target.value = '';
     };
     reader.readAsText(file);
   }
 
-  function escapeHTML(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  function escapeAttr(str) {
-    return String(str).replace(/"/g, '&quot;');
-  }
-
-  loadData();
-  resetForm();
-  renderCustomers();
+  document.getElementById('newDate').value = today();
+  load();
+  renderList();
 </script>
 </body>
 </html>
