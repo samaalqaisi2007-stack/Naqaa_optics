@@ -1,1200 +1,928 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بصريات النقاء - نظام إدارة الزبائن وقياسات النظارات</title>
-    
-    <!-- تحميل خط Cairo العربي العصري والواضح -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- تحميل مكتبة Tailwind CSS للتصميم المتجاوب -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- تحميل مكتبة أيقونات Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>بصريات النقاء | سجل الزبائن والقياسات</title>
+  <style>
+    :root {
+      --primary: #0f4c81;
+      --primary-light: #1e6bb8;
+      --accent: #0d9488;
+      --accent-soft: #e6f7f5;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #dbe3ee;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --warning: #d97706;
+      --shadow: 0 4px 16px rgba(15, 76, 129, 0.08);
+      --radius: 14px;
+    }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Cairo', 'sans-serif'],
-                    },
-                    colors: {
-                        optical: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
-                        },
-                        navy: {
-                            800: '#1e293b',
-                            900: '#0f172a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+    }
 
-    <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            -webkit-tap-highlight-color: transparent;
-        }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 40px;
+    }
 
-        /* تنسيق خاص للجدول الطبي لضمان وضوح الأرقام الإنجليزية والعلامات (+ / -) */
-        .rx-input, .rx-value {
-            direction: ltr;
-            text-align: center;
-            font-variant-numeric: tabular-nums;
-        }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      padding: 18px 20px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-        /* إخفاء شريط التمرير مع السماح بالتمرير السلس */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
 
-        /* تنسيق الطباعة للوصفة الطبية / الفاتورة */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printable-area, #printable-area * {
-                visibility: visible;
-            }
-            #printable-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                padding: 20px;
-                background: white !important;
-                box-shadow: none !important;
-                border: none !important;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
+    .brand h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      letter-spacing: 0.2px;
+    }
+
+    .brand p {
+      margin: 3px 0 0;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .backup-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: 0.2s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-light {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-light:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover {
+      opacity: 0.92;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+
+    .btn-danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border: 1px solid #fecaca;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      border-radius: 8px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 1.15rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 10px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .field label {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .field input, .field textarea, .field select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.96rem;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus, .field textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .customer-base-box {
+      background: #f8fbff;
+      border: 1.5px solid #cfe0f5;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .customer-base-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .glasses-block {
+      border: 2px solid #d5e5f2;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: #ffffff;
+      position: relative;
+    }
+
+    .glasses-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .glasses-title {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.02rem;
+    }
+
+    .rx-wrapper {
+      overflow-x: auto;
+      margin-top: 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+    }
+
+    table.rx-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 520px;
+      direction: ltr;
+      text-align: center;
+    }
+
+    table.rx-table th {
+      background: #eef4fb;
+      color: var(--primary);
+      font-weight: 700;
+      padding: 9px 6px;
+      font-size: 0.86rem;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    table.rx-table td {
+      padding: 7px 6px;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    table.rx-table td.eye-label {
+      font-weight: 800;
+      color: var(--primary);
+      background: #f8fafc;
+      width: 54px;
+    }
+
+    table.rx-table input {
+      width: 100%;
+      padding: 7px 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      text-align: center;
+      font-size: 0.92rem;
+      direction: ltr;
+    }
+
+    table.rx-table input:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-box input {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+
+    .stats-pill {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .customer-item {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #fff;
+      transition: box-shadow 0.2s;
+    }
+
+    .customer-item:hover {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .customer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    .customer-name {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .customer-phone {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 3px;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .customer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .saved-glasses-card {
+      background: #f9fbfd;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .saved-glasses-head {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 0.94rem;
+    }
+
+    .meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+    }
+
+    .meta-tag {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 4px 9px;
+      border-radius: 8px;
+    }
+
+    .mini-rx {
+      width: 100%;
+      border-collapse: collapse;
+      direction: ltr;
+      text-align: center;
+      font-size: 0.84rem;
+      background: #fff;
+      margin-top: 6px;
+    }
+
+    .mini-rx th, .mini-rx td {
+      border: 1px solid #dbe3ee;
+      padding: 5px;
+    }
+
+    .mini-rx th {
+      background: #eef4fb;
+      color: var(--primary);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 28px 12px;
+      color: var(--muted);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #fff;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      display: none;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-50">
+<body>
 
-    <!-- الشريط العلوي (Header) -->
-    <header class="bg-gradient-to-l from-navy-900 via-navy-800 to-optical-900 text-white shadow-lg sticky top-0 z-30 no-print">
-        <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
-            <div onclick="navigateTo('home')" class="flex items-center gap-3 cursor-pointer group">
-                <div class="bg-optical-500/20 border border-optical-400/30 p-2.5 rounded-2xl group-hover:bg-optical-500/30 transition">
-                    <i data-lucide="glasses" class="w-7 h-7 text-optical-300"></i>
-                </div>
-                <div>
-                    <h1 class="text-lg sm:text-xl font-bold tracking-tight">بصريات النقاء</h1>
-                    <p class="text-xs text-optical-200/80 hidden sm:block">نظام إدارة ملفات الزبائن وقياسات النظر</p>
-                </div>
-            </div>
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <h1>بصريات النقاء</h1>
+      <p>نظام إدارة الزبائن وسجل قياسات النظارات</p>
+    </div>
+    <div class="backup-bar">
+      <button type="button" class="btn btn-light btn-sm" onclick="exportJSON()">⬇️ تصدير نسخة احتياطية</button>
+      <button type="button" class="btn btn-light btn-sm" onclick="document.getElementById('importFile').click()">⬆️ استيراد نسخة</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)" />
+    </div>
+  </div>
+</header>
 
-            <div class="flex items-center gap-2">
-                <button onclick="navigateTo('home')" id="nav-home-btn" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 transition flex items-center gap-1.5">
-                    <i data-lucide="home" class="w-4 h-4"></i>
-                    <span>الرئيسية</span>
-                </button>
-                <button onclick="toggleBackupModal(true)" title="النسخ الاحتياطي وتصدير البيانات" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition text-optical-200">
-                    <i data-lucide="database" class="w-4 h-4"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+<div class="container">
 
-    <!-- المحتوى الرئيسي للتطبيق -->
-    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6 sm:py-8">
-
-        <!-- ========================================================= -->
-        <!-- 1. الصفحة الرئيسية (HOME VIEW) -->
-        <!-- ========================================================= -->
-        <section id="view-home" class="space-y-8 animate-fadeIn">
-            
-            <!-- ترحيب وإحصائية سريعة -->
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-optical-50 text-optical-700 border border-optical-200 mb-2">
-                        <span class="w-2 h-2 rounded-full bg-optical-500 animate-pulse"></span>
-                        لوحة التحكم السريعة
-                    </span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-navy-900">أهلاً بكِ في بصريات النقاء</h2>
-                    <p class="text-slate-500 text-sm sm:text-base mt-1">اختاري الإجراء المطلوب للبحث في السجلات أو إضافة قياس نظارة جديد.</p>
-                </div>
-                <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-5 py-3.5 text-center w-full sm:w-auto">
-                    <div class="text-xs text-slate-500 font-semibold">إجمالي الزبائن المسجلين</div>
-                    <div id="total-customers-count" class="text-2xl sm:text-3xl font-extrabold text-optical-600 mt-0.5">0</div>
-                </div>
-            </div>
-
-            <!-- الأزرار الرئيسية الكبيرة (البحث عن زبون / تسجيل زبون جديد) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-                
-                <!-- بطاقة: البحث عن زبون -->
-                <button onclick="navigateTo('search')" class="group text-right bg-white hover:bg-navy-900 border-2 border-slate-200 hover:border-navy-900 rounded-3xl p-7 sm:p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-navy-900/5 group-hover:bg-white/5 rounded-full transition-transform group-hover:scale-125"></div>
-                    
-                    <div class="w-16 h-16 rounded-2xl bg-blue-50 group-hover:bg-white/10 text-blue-600 group-hover:text-optical-300 flex items-center justify-center mb-6 transition-colors">
-                        <i data-lucide="search" class="w-8 h-8"></i>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-2xl font-extrabold text-navy-900 group-hover:text-white transition-colors">البحث عن زبون</h3>
-                        <p class="text-slate-500 group-hover:text-slate-300 text-sm sm:text-base mt-2 leading-relaxed">
-                            ابحثي بالاسم أو رقم التليفون لعرض سجل الزبون، تفاصيل العدسات والإطار، وجدول قياسات النظر.
-                        </p>
-                    </div>
-
-                    <div class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-blue-600 group-hover:text-optical-300">
-                        <span>فتح البحث السريع</span>
-                        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
-                    </div>
-                </button>
-
-                <!-- بطاقة: تسجيل زبون جديد -->
-                <button onclick="openNewCustomerForm()" class="group text-right bg-gradient-to-br from-optical-600 to-optical-800 hover:from-optical-700 hover:to-navy-900 text-white rounded-3xl p-7 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full transition-transform group-hover:scale-125"></div>
-                    
-                    <div class="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-sm text-white flex items-center justify-center mb-6">
-                        <i data-lucide="user-plus" class="w-8 h-8"></i>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-2xl font-extrabold text-white">تسجيل زبون جديد</h3>
-                        <p class="text-optical-100 text-sm sm:text-base mt-2 leading-relaxed">
-                            إضافة ملف زبون جديد مع كافة البيانات (نوع العدسة، الشركة، الإطار، السعر، الفرع) وجدول القياسات.
-                        </p>
-                    </div>
-
-                    <div class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-white">
-                        <span>بدء التسجيل الآن</span>
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                    </div>
-                </button>
-
-            </div>
-
-            <!-- آخر الزبائن المسجلين (للوصول السريع) -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold text-navy-900 flex items-center gap-2">
-                        <i data-lucide="clock" class="w-5 h-5 text-optical-600"></i>
-                        <span>أحدث السجلات المضافة</span>
-                    </h3>
-                    <button onclick="navigateTo('search')" class="text-sm font-semibold text-optical-600 hover:text-optical-800">عرض الكل</button>
-                </div>
-                <div id="recent-customers-list" class="divide-y divide-slate-100">
-                    <!-- يتم تعبئتها بواسطة JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ========================================================= -->
-        <!-- 2. صفحة البحث عن زبون (SEARCH VIEW) -->
-        <!-- ========================================================= -->
-        <section id="view-search" class="hidden space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <button onclick="navigateTo('home')" class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-navy-900 mb-1">
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        <span>العودة للرئيسية</span>
-                    </button>
-                    <h2 class="text-2xl font-extrabold text-navy-900">البحث عن زبون</h2>
-                </div>
-                <button onclick="openNewCustomerForm()" class="px-4 py-2.5 bg-optical-600 hover:bg-optical-700 text-white rounded-xl font-bold text-sm shadow-sm flex items-center justify-center gap-2 transition">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>زبون جديد</span>
-                </button>
-            </div>
-
-            <!-- شريط البحث الفوري -->
-            <div class="bg-white p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200">
-                <div class="relative">
-                    <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2"></i>
-                    <input 
-                        type="text" 
-                        id="search-input" 
-                        oninput="handleSearch(this.value)"
-                        placeholder="اكتبي اسم الزبون أو رقم التليفون للبحث الفوري..." 
-                        class="w-full pr-12 pl-12 py-3.5 bg-slate-50 border-2 border-slate-200 focus:border-optical-500 focus:bg-white rounded-2xl text-base font-semibold text-navy-900 outline-none transition"
-                    >
-                    <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
-                        <i data-lucide="x-circle" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                <div class="flex items-center justify-between mt-3 px-1 text-xs text-slate-500">
-                    <span id="search-results-count">عرض جميع الزبائن</span>
-                    <span>اضغطي على اسم الزبون لعرض ملفه الكامل وقياسات النظر</span>
-                </div>
-            </div>
-
-            <!-- قائمة نتائج البحث -->
-            <div id="search-results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- يتم تعبئة بطاقات الزبائن هنا -->
-            </div>
-        </section>
-
-        <!-- ========================================================= -->
-        <!-- 3. صفحة ملف الزبون الكامل (CUSTOMER PROFILE VIEW) -->
-        <!-- ========================================================= -->
-        <section id="view-profile" class="hidden space-y-6">
-            <!-- أزرار التحكم أعلى الملف -->
-            <div class="flex flex-wrap items-center justify-between gap-3 no-print">
-                <button onclick="navigateTo('search')" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    <span>رجوع للبحث</span>
-                </button>
-
-                <div class="flex flex-wrap items-center gap-2">
-                    <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-bold flex items-center gap-1.5 shadow-sm transition">
-                        <i data-lucide="printer" class="w-4 h-4"></i>
-                        <span>طباعة الوصفة</span>
-                    </button>
-                    <button id="btn-edit-customer" class="px-4 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-sm font-bold flex items-center gap-1.5 transition">
-                        <i data-lucide="edit-3" class="w-4 h-4"></i>
-                        <span>تعديل البيانات</span>
-                    </button>
-                    <button id="btn-delete-customer" class="px-3.5 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-sm font-bold flex items-center gap-1.5 transition">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        <span>حذف</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- البطاقة القابلة للطباعة (تفاصيل الزبون + جدول القياسات) -->
-            <div id="printable-area" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-8">
-                
-                <!-- ترويسة المحل عند الطباعة -->
-                <div class="hidden print:flex items-center justify-between pb-4 mb-2 border-b-2 border-navy-900">
-                    <div class="flex items-center gap-3">
-                        <div class="p-2 rounded-xl bg-navy-900 text-white">
-                            <i data-lucide="glasses" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h1 class="text-xl font-extrabold text-navy-900">بصريات النقاء</h1>
-                            <p class="text-xs text-slate-500">بطاقة قياس نظر وتفاصيل الطلب</p>
-                        </div>
-                    </div>
-                    <div class="text-xs text-slate-500 font-bold">
-                        وصفة طبية معتمدة
-                    </div>
-                </div>
-
-                <!-- ترويسة الوصفة -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 rounded-2xl bg-optical-50 border border-optical-200 text-optical-700 flex items-center justify-center font-extrabold text-2xl" id="profile-avatar">
-                            ز
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <h2 id="profile-name" class="text-2xl font-extrabold text-navy-900">اسم الزبون</h2>
-                                <span id="profile-branch-badge" class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-optical-50 text-optical-700 border border-optical-200">الفرع</span>
-                            </div>
-                            <div class="flex items-center gap-4 mt-1.5 text-sm text-slate-600 font-semibold">
-                                <span class="inline-flex items-center gap-1.5" dir="ltr">
-                                    <i data-lucide="phone" class="w-4 h-4 text-optical-600"></i>
-                                    <span id="profile-phone">0790000000</span>
-                                </span>
-                                <span class="text-slate-300">|</span>
-                                <span class="inline-flex items-center gap-1.5">
-                                    <i data-lucide="calendar" class="w-4 h-4 text-optical-600"></i>
-                                    <span id="profile-date">2026-01-01</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 px-5 py-3 rounded-2xl border border-slate-200 text-right sm:text-left">
-                        <div class="text-xs text-slate-500 font-semibold">السعر الإجمالي</div>
-                        <div id="profile-price" class="text-2xl font-extrabold text-optical-700">0</div>
-                    </div>
-                </div>
-
-                <!-- جدول قياسات النظارة (R / L - SPH / CYL / AXIS / ADD / IPD) -->
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-extrabold text-navy-900 flex items-center gap-2">
-                            <i data-lucide="eye" class="w-5 h-5 text-optical-600"></i>
-                            <span>جدول قياسات النظارة (Rx Prescription)</span>
-                        </h3>
-                        <div class="bg-navy-900 text-white px-3.5 py-1.5 rounded-xl text-sm font-bold flex items-center gap-2">
-                            <span class="text-optical-300">IPD (المسافة بين الحدقتين):</span>
-                            <span id="profile-ipd" class="rx-value font-extrabold text-base">--</span>
-                            <span class="text-xs text-slate-300">mm</span>
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto rounded-2xl border-2 border-navy-900/15">
-                        <table class="w-full text-center border-collapse">
-                            <thead>
-                                <tr class="bg-navy-900 text-white text-sm">
-                                    <th class="py-3.5 px-4 font-bold text-right border-l border-white/10">العين (Eye)</th>
-                                    <th class="py-3.5 px-4 font-extrabold tracking-wider border-l border-white/10" dir="ltr">SPH</th>
-                                    <th class="py-3.5 px-4 font-extrabold tracking-wider border-l border-white/10" dir="ltr">CYL</th>
-                                    <th class="py-3.5 px-4 font-extrabold tracking-wider border-l border-white/10" dir="ltr">AXIS</th>
-                                    <th class="py-3.5 px-4 font-extrabold tracking-wider" dir="ltr">ADD</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-200 text-base font-bold">
-                                <!-- العين اليمنى R -->
-                                <tr class="bg-optical-50/40">
-                                    <td class="py-4 px-4 text-right border-l border-slate-200">
-                                        <div class="flex items-center gap-2.5">
-                                            <span class="w-8 h-8 rounded-lg bg-optical-600 text-white flex items-center justify-center font-extrabold text-sm">R</span>
-                                            <div>
-                                                <div class="text-navy-900 font-bold text-sm">العين اليمنى</div>
-                                                <div class="text-[11px] text-slate-400 font-normal">Right Eye (OD)</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="prof-r-sph" class="py-4 px-4 rx-value text-lg text-navy-900 border-l border-slate-200">--</td>
-                                    <td id="prof-r-cyl" class="py-4 px-4 rx-value text-lg text-navy-900 border-l border-slate-200">--</td>
-                                    <td id="prof-r-axis" class="py-4 px-4 rx-value text-lg text-navy-900 border-l border-slate-200">--</td>
-                                    <td id="prof-r-add" class="py-4 px-4 rx-value text-lg text-optical-700">--</td>
-                                </tr>
-                                <!-- العين اليسرى L -->
-                                <tr class="bg-white">
-                                    <td class="py-4 px-4 text-right border-l border-slate-200">
-                                        <div class="flex items-center gap-2.5">
-                                            <span class="w-8 h-8 rounded-lg bg-navy-800 text-white flex items-center justify-center font-extrabold text-sm">L</span>
-                                            <div>
-                                                <div class="text-navy-900 font-bold text-sm">العين اليسرى</div>
-                                                <div class="text-[11px] text-slate-400 font-normal">Left Eye (OS)</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td id="prof-l-sph" class="py-4 px-4 rx-value text-lg text-navy-900 border-l border-slate-200">--</td>
-                                    <td id="prof-l-cyl" class="py-4 px-4 rx-value text-lg text-navy-900 border-l border-slate-200">--</td>
-                                    <td id="prof-l-axis" class="py-4 px-4 rx-value text-lg text-navy-900 border-l border-slate-200">--</td>
-                                    <td id="prof-l-add" class="py-4 px-4 rx-value text-lg text-optical-700">--</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- تفاصيل الطلب (العدسة، الشركة، الإطار، الفرع، الموظف) -->
-                <div>
-                    <h3 class="text-lg font-extrabold text-navy-900 mb-3 flex items-center gap-2">
-                        <i data-lucide="clipboard-list" class="w-5 h-5 text-optical-600"></i>
-                        <span>تفاصيل العدسات والإطار والطلب</span>
-                    </h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                            <div class="text-xs text-slate-500 font-semibold">نوع العدسة</div>
-                            <div id="profile-lens-type" class="text-base font-bold text-navy-900 mt-1">--</div>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                            <div class="text-xs text-slate-500 font-semibold">الشركة المصنعة</div>
-                            <div id="profile-company" class="text-base font-bold text-navy-900 mt-1">--</div>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                            <div class="text-xs text-slate-500 font-semibold">نوع الإطار</div>
-                            <div id="profile-frame-type" class="text-base font-bold text-navy-900 mt-1">--</div>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                            <div class="text-xs text-slate-500 font-semibold">الفرع</div>
-                            <div id="profile-branch" class="text-base font-bold text-navy-900 mt-1">--</div>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                            <div class="text-xs text-slate-500 font-semibold">الموظف المسؤول</div>
-                            <div id="profile-employee" class="text-base font-bold text-navy-900 mt-1">--</div>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                            <div class="text-xs text-slate-500 font-semibold">تاريخ التسجيل</div>
-                            <div id="profile-date-box" class="text-base font-bold text-navy-900 mt-1">--</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- الملاحظات -->
-                <div class="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 sm:p-5">
-                    <div class="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-1.5">
-                        <i data-lucide="file-text" class="w-4 h-4"></i>
-                        <span>ملاحظات إضافية</span>
-                    </div>
-                    <p id="profile-notes" class="text-sm sm:text-base text-slate-700 leading-relaxed whitespace-pre-line">لا توجد ملاحظات.</p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- ========================================================= -->
-        <!-- 4. صفحة تسجيل / تعديل زبون (ADD / EDIT FORM VIEW) -->
-        <!-- ========================================================= -->
-        <section id="view-form" class="hidden space-y-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <button onclick="cancelForm()" class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-navy-900 mb-1">
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        <span>إلغاء والعودة</span>
-                    </button>
-                    <h2 id="form-page-title" class="text-2xl font-extrabold text-navy-900">تسجيل زبون جديد</h2>
-                </div>
-            </div>
-
-            <form id="customer-form" onsubmit="saveCustomer(event)" class="space-y-6">
-                <input type="hidden" id="edit-customer-id">
-
-                <!-- القسم الأول: المعلومات الأساسية للزبون -->
-                <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200 space-y-5">
-                    <h3 class="text-lg font-extrabold text-navy-900 flex items-center gap-2 pb-3 border-b border-slate-100">
-                        <span class="w-7 h-7 rounded-lg bg-optical-100 text-optical-700 flex items-center justify-center text-sm font-extrabold">1</span>
-                        <span>بيانات الزبون الأساسية</span>
-                    </h3>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">اسم الزبون <span class="text-red-500">*</span></label>
-                            <input type="text" id="inp-name" required placeholder="مثال: سارة محمود العلي" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">رقم التليفون <span class="text-red-500">*</span></label>
-                            <input type="tel" id="inp-phone" required placeholder="079XXXXXXX" dir="ltr" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold text-right transition">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">التاريخ</label>
-                            <input type="date" id="inp-date" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- القسم الثاني: جدول قياسات النظارة (R & L) -->
-                <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200 space-y-5">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-                        <h3 class="text-lg font-extrabold text-navy-900 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-lg bg-optical-100 text-optical-700 flex items-center justify-center text-sm font-extrabold">2</span>
-                            <span>جدول قياسات النظارة</span>
-                        </h3>
-                        
-                        <!-- حقل IPD -->
-                        <div class="flex items-center gap-2 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200">
-                            <label for="inp-ipd" class="text-sm font-extrabold text-navy-900 whitespace-nowrap" dir="ltr">IPD (mm):</label>
-                            <input type="text" id="inp-ipd" placeholder="مثال: 63" class="rx-input w-24 px-2.5 py-1.5 rounded-lg bg-white border border-slate-300 focus:border-optical-500 outline-none font-bold text-navy-900">
-                        </div>
-                    </div>
-
-                    <p class="text-xs text-slate-500">أدخلي القياسات لكل عين (مثال: <span dir="ltr" class="font-mono font-bold">-1.25</span> أو <span dir="ltr" class="font-mono font-bold">+2.00</span>). اتركي الحقل فارغاً في حال عدم وجود قياس.</p>
-
-                    <div class="overflow-x-auto rounded-2xl border-2 border-slate-200">
-                        <table class="w-full text-center border-collapse min-w-[540px]">
-                            <thead>
-                                <tr class="bg-navy-900 text-white text-sm">
-                                    <th class="py-3 px-4 text-right font-bold w-36">العين</th>
-                                    <th class="py-3 px-3 font-extrabold tracking-wider" dir="ltr">SPH</th>
-                                    <th class="py-3 px-3 font-extrabold tracking-wider" dir="ltr">CYL</th>
-                                    <th class="py-3 px-3 font-extrabold tracking-wider" dir="ltr">AXIS</th>
-                                    <th class="py-3 px-3 font-extrabold tracking-wider" dir="ltr">ADD</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-200">
-                                <!-- صف العين اليمنى R -->
-                                <tr class="bg-optical-50/30">
-                                    <td class="py-3.5 px-4 text-right font-bold text-navy-900">
-                                        <div class="flex items-center gap-2">
-                                            <span class="w-7 h-7 rounded-lg bg-optical-600 text-white flex items-center justify-center font-extrabold text-xs">R</span>
-                                            <span>العين اليمنى</span>
-                                        </div>
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-r-sph" placeholder="0.00" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-r-cyl" placeholder="0.00" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-r-axis" placeholder="180" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-r-add" placeholder="+0.00" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold text-optical-700">
-                                    </td>
-                                </tr>
-                                <!-- صف العين اليسرى L -->
-                                <tr class="bg-white">
-                                    <td class="py-3.5 px-4 text-right font-bold text-navy-900">
-                                        <div class="flex items-center gap-2">
-                                            <span class="w-7 h-7 rounded-lg bg-navy-800 text-white flex items-center justify-center font-extrabold text-xs">L</span>
-                                            <span>العين اليسرى</span>
-                                        </div>
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-l-sph" placeholder="0.00" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-l-cyl" placeholder="0.00" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-l-axis" placeholder="180" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" id="inp-l-add" placeholder="+0.00" class="rx-input w-full py-2.5 px-2 rounded-xl border border-slate-300 bg-white focus:border-optical-500 outline-none font-bold text-optical-700">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- القسم الثالث: مواصفات العدسة والإطار والفرع -->
-                <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200 space-y-5">
-                    <h3 class="text-lg font-extrabold text-navy-900 flex items-center gap-2 pb-3 border-b border-slate-100">
-                        <span class="w-7 h-7 rounded-lg bg-optical-100 text-optical-700 flex items-center justify-center text-sm font-extrabold">3</span>
-                        <span>مواصفات النظارة والطلب</span>
-                    </h3>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">نوع العدسة</label>
-                            <input type="text" id="inp-lens-type" list="lens-suggestions" placeholder="مثال: بلو كت / مضغوط / فوتو" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                            <datalist id="lens-suggestions">
-                                <option value="حماية أشعة زرقاء (Blue Cut)">
-                                <option value="عدسات مضغوطة (High Index)">
-                                <option value="عدسات متلونة بالشمس (Photochromic)">
-                                <option value="عدسات متعددة البؤر (Progressive)">
-                                <option value="عدسات عادية (Anti-Reflection)">
-                            </datalist>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">الشركة</label>
-                            <input type="text" id="inp-company" list="company-suggestions" placeholder="مثال: Zeiss / Essilor / Hoya" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                            <datalist id="company-suggestions">
-                                <option value="Zeiss">
-                                <option value="Essilor">
-                                <option value="Hoya">
-                                <option value="Nikon">
-                                <option value="Rodenstock">
-                            </datalist>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">نوع الإطار</label>
-                            <input type="text" id="inp-frame-type" list="frame-suggestions" placeholder="مثال: معدن / بلاستيك / بدون إطار" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                            <datalist id="frame-suggestions">
-                                <option value="إطار كامل معدن (Metal)">
-                                <option value="إطار كامل أسيتات/بلاستيك">
-                                <option value="نصف إطار (Half-Rim)">
-                                <option value="بدون إطار (Rimless)">
-                                <option value="إطار تيتانيوم خفيف">
-                            </datalist>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">السعر</label>
-                            <input type="text" id="inp-price" placeholder="مثال: 65 دينار" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">الفرع</label>
-                            <input type="text" id="inp-branch" placeholder="مثال: الفرع الرئيسي / فرع الجامعة" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5">الموظف</label>
-                            <input type="text" id="inp-employee" placeholder="اسم الموظف المسؤول" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5">ملاحظات</label>
-                        <textarea id="inp-notes" rows="3" placeholder="أي ملاحظات حول قياس النظارة، موعد التسليم، أو الدفعة المتبقية..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-optical-500 focus:bg-white outline-none font-semibold transition"></textarea>
-                    </div>
-                </div>
-
-                <!-- أزرار الحفظ -->
-                <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2">
-                    <button type="button" onclick="cancelForm()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white border border-slate-300 text-slate-700 font-bold hover:bg-slate-50 transition">
-                        إلغاء
-                    </button>
-                    <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-optical-600 hover:bg-optical-700 text-white font-extrabold shadow-lg shadow-optical-600/20 flex items-center justify-center gap-2 transition">
-                        <i data-lucide="check-circle" class="w-5 h-5"></i>
-                        <span>حفظ بيانات الزبون</span>
-                    </button>
-                </div>
-            </form>
-        </section>
-
-    </main>
-
-    <!-- ========================================================= -->
-    <!-- نافذة النسخ الاحتياطي وتصدير البيانات (BACKUP MODAL) -->
-    <!-- ========================================================= -->
-    <div id="backup-modal" class="hidden fixed inset-0 bg-navy-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl space-y-5">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                <h3 class="text-xl font-extrabold text-navy-900 flex items-center gap-2">
-                    <i data-lucide="shield-check" class="w-6 h-6 text-optical-600"></i>
-                    <span>النسخ الاحتياطي للبيانات</span>
-                </h3>
-                <button onclick="toggleBackupModal(false)" class="p-1.5 rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <p class="text-sm text-slate-600 leading-relaxed">
-                يتم حفظ بيانات الزبائن تلقائياً على هذا الجهاز. يُنصح بتنزيل نسخة احتياطية بشكل دوري لحفظها على جهازك أو نقلها لجهاز آخر.
-            </p>
-
-            <div class="space-y-3">
-                <button onclick="exportToCSV()" class="w-full p-3.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 font-bold flex items-center justify-between transition">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
-                        <span>تصدير إلى ملف Excel (CSV)</span>
-                    </span>
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                </button>
-
-                <button onclick="exportToJSON()" class="w-full p-3.5 rounded-2xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-900 font-bold flex items-center justify-between transition">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="download-cloud" class="w-5 h-5 text-blue-600"></i>
-                        <span>تنزيل نسخة احتياطية (JSON)</span>
-                    </span>
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                </button>
-
-                <label class="w-full p-3.5 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 font-bold flex items-center justify-between cursor-pointer transition">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="upload-cloud" class="w-5 h-5 text-slate-600"></i>
-                        <span>استعادة نسخة احتياطية (JSON)</span>
-                    </span>
-                    <i data-lucide="upload" class="w-4 h-4"></i>
-                    <input type="file" accept=".json" onchange="importFromJSON(event)" class="hidden">
-                </label>
-            </div>
-        </div>
+  <!-- نموذج إضافة / تعديل زبون -->
+  <div class="card" id="formCard">
+    <div class="section-title">
+      <span id="formTitle">إضافة سجل زبون جديد</span>
+      <button type="button" class="btn btn-outline btn-sm" id="cancelEditBtn" style="display:none" onclick="resetForm()">إلغاء التعديل</button>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- نافذة تأكيد الحذف المخصصة (بديل أنيق لـ confirm) -->
-    <!-- ========================================================= -->
-    <div id="confirm-modal" class="hidden fixed inset-0 bg-navy-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center space-y-4">
-            <div class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mx-auto">
-                <i data-lucide="alert-triangle" class="w-7 h-7"></i>
-            </div>
-            <h3 class="text-xl font-extrabold text-navy-900">تأكيد حذف السجل</h3>
-            <p class="text-sm text-slate-500">هل أنتِ متأكدة من حذف بيانات هذا الزبون نهائياً؟ لا يمكن التراجع عن هذه الخطوة.</p>
-            <div class="flex items-center gap-3 pt-2">
-                <button onclick="closeConfirmModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition">إلغاء</button>
-                <button id="confirm-delete-action" class="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold transition">نعم، احذف</button>
-            </div>
+    <form id="customerForm" onsubmit="saveCustomer(event)">
+      <input type="hidden" id="editCustomerId" value="" />
+
+      <!-- بيانات الزبون الأساسية (مرة واحدة) -->
+      <div class="customer-base-box">
+        <div class="customer-base-badge">بيانات الزبون الأساسية</div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="customerName">اسم الزبون *</label>
+            <input type="text" id="customerName" required placeholder="مثال: محمد أحمد" />
+          </div>
+          <div class="field">
+            <label for="customerPhone">رقم التليفون *</label>
+            <input type="tel" id="customerPhone" required placeholder="مثال: 0790000000" />
+          </div>
         </div>
+      </div>
+
+      <!-- قائمة نظارات الزبون -->
+      <div id="glassesContainer"></div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-accent" onclick="addGlassesBlock()">➕ إضافة نظارة أخرى لهذا الزبون</button>
+        <button type="submit" class="btn btn-primary">💾 حفظ بيانات الزبون والنظارات</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- البحث والسجلات -->
+  <div class="card">
+    <div class="section-title">
+      <span>سجل الزبائن المحفوظ</span>
+      <span class="stats-pill" id="customerCount">0 زبون</span>
     </div>
 
-    <!-- إشعار منبثق (Toast Notification) -->
-    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2.5 px-5 py-3 rounded-2xl bg-navy-900 text-white text-sm font-bold shadow-xl no-print">
-        <i data-lucide="check-circle-2" class="w-5 h-5 text-optical-400"></i>
-        <span id="toast-message">تم الحفظ بنجاح</span>
+    <div class="search-box" style="margin-bottom: 16px;">
+      <input type="text" id="searchInput" placeholder="ابحث باسم الزبون أو رقم التليفون..." oninput="renderCustomers()" />
+      <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('searchInput').value=''; renderCustomers();">مسح البحث</button>
     </div>
 
-    <script>
-        // =========================================================
-        // إدارة البيانات والتخزين المحلي (LocalStorage)
-        // =========================================================
-        const STORAGE_KEY = 'optical_shop_customers_v1';
-        let customers = [];
-        let currentCustomerId = null;
+    <div id="customersList"></div>
+  </div>
 
-        // بيانات تجريبية أولية لتسهيل التجربة فور فتح الموقع
-        const SAMPLE_DATA = [
-            {
-                id: 'sample-1',
-                name: 'أحمد خالد المنصور',
-                phone: '0795544332',
-                date: new Date().toISOString().split('T')[0],
-                lensType: 'حماية أشعة زرقاء (Blue Cut)',
-                company: 'Zeiss',
-                frameType: 'إطار تيتانيوم خفيف',
-                price: '85 دينار',
-                branch: 'الفرع الرئيسي',
-                employee: 'سارة',
-                notes: 'الزبون يستخدم الحاسوب لفترات طويلة، تم طلب طبقة حماية إضافية.',
-                rx: {
-                    ipd: '64',
-                    r: { sph: '-1.50', cyl: '-0.75', axis: '180', add: '' },
-                    l: { sph: '-1.75', cyl: '-0.50', axis: '175', add: '' }
-                }
-            },
-            {
-                id: 'sample-2',
-                name: 'منى عبد الله الخطيب',
-                phone: '0781122334',
-                date: '2026-11-18',
-                lensType: 'عدسات متعددة البؤر (Progressive)',
-                company: 'Essilor',
-                frameType: 'إطار كامل أسيتات',
-                price: '120 دينار',
-                branch: 'فرع الجاردنز',
-                employee: 'ليلى',
-                notes: 'نظارة قراءة ومسافات معاً.',
-                rx: {
-                    ipd: '61',
-                    r: { sph: '+1.25', cyl: '-0.50', axis: '90', add: '+1.75' },
-                    l: { sph: '+1.50', cyl: '-0.25', axis: '85', add: '+1.75' }
-                }
-            }
-        ];
+</div>
 
-        // تحميل البيانات عند تشغيل الصفحة
-        function initApp() {
-            try {
-                const stored = localStorage.getItem(STORAGE_KEY);
-                if (stored) {
-                    customers = JSON.parse(stored);
-                } else {
-                    customers = [...SAMPLE_DATA];
-                    saveToStorage();
-                }
-            } catch (e) {
-                console.error('خطأ في قراءة البيانات:', e);
-                customers = [];
-            }
+<div class="toast" id="toast"></div>
 
-            updateDashboardStats();
-            renderRecentCustomers();
-            lucide.createIcons();
+<script>
+  const STORAGE_KEY = 'naqaa_optics_customers_v1';
+  let customers = [];
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2800);
+  }
+
+  function todayISO() {
+    const d = new Date();
+    return d.toISOString().split('T')[0];
+  }
+
+  // ترقية السجلات القديمة تلقائياً لصيغة تعدد النظارات دون فقدان أي معلومة
+  function normalizeCustomer(c) {
+    if (Array.isArray(c.glasses) && c.glasses.length > 0) {
+      return c;
+    }
+    return {
+      id: c.id || Date.now().toString(),
+      name: c.name || '',
+      phone: c.phone || '',
+      glasses: [
+        {
+          date: c.date || todayISO(),
+          lensFrame: c.lensFrame || c.details || '',
+          price: c.price || '',
+          branch: c.branch || '',
+          employee: c.employee || '',
+          notes: c.notes || '',
+          rx: c.rx || {
+            R: { sph: '', cyl: '', axis: '', add: '', ipd: '' },
+            L: { sph: '', cyl: '', axis: '', add: '', ipd: '' }
+          }
         }
+      ]
+    };
+  }
 
-        function saveToStorage() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
-                updateDashboardStats();
-                renderRecentCustomers();
-            } catch (e) {
-                showToast('حدث خطأ أثناء حفظ البيانات في المتصفح');
-            }
+  function loadData() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      customers = Array.isArray(parsed) ? parsed.map(normalizeCustomer) : [];
+    } catch (e) {
+      customers = [];
+    }
+  }
+
+  function persistData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
+  }
+
+  function createEmptyGlasses() {
+    return {
+      date: todayISO(),
+      lensFrame: '',
+      price: '',
+      branch: '',
+      employee: '',
+      notes: '',
+      rx: {
+        R: { sph: '', cyl: '', axis: '', add: '', ipd: '' },
+        L: { sph: '', cyl: '', axis: '', add: '', ipd: '' }
+      }
+    };
+  }
+
+  function addGlassesBlock(data = null) {
+    const g = data || createEmptyGlasses();
+    const container = document.getElementById('glassesContainer');
+    const block = document.createElement('div');
+    block.className = 'glasses-block';
+
+    block.innerHTML = `
+      <div class="glasses-header">
+        <span class="glasses-title">👓 النظارة رقم <span class="g-num"></span></span>
+        <button type="button" class="btn btn-danger btn-sm remove-glasses-btn" onclick="removeGlassesBlock(this)">🗑️ حذف هذه النظارة</button>
+      </div>
+
+      <div class="grid-3">
+        <div class="field">
+          <label>التاريخ</label>
+          <input type="date" class="g-date" value="${escapeAttr(g.date || todayISO())}" />
+        </div>
+        <div class="field">
+          <label>تفاصيل العدسة والإطار</label>
+          <input type="text" class="g-lensFrame" value="${escapeAttr(g.lensFrame || '')}" placeholder="مثال: عدسة بلوكت + إطار طبي" />
+        </div>
+        <div class="field">
+          <label>السعر</label>
+          <input type="text" class="g-price" value="${escapeAttr(g.price || '')}" placeholder="مثال: 45 دينار" />
+        </div>
+        <div class="field">
+          <label>الفرع</label>
+          <input type="text" class="g-branch" value="${escapeAttr(g.branch || '')}" placeholder="اسم الفرع" />
+        </div>
+        <div class="field">
+          <label>الموظف</label>
+          <input type="text" class="g-employee" value="${escapeAttr(g.employee || '')}" placeholder="اسم الموظف" />
+        </div>
+        <div class="field">
+          <label>ملاحظات</label>
+          <input type="text" class="g-notes" value="${escapeAttr(g.notes || '')}" placeholder="أي ملاحظات إضافية..." />
+        </div>
+      </div>
+
+      <div class="rx-wrapper">
+        <table class="rx-table">
+          <thead>
+            <tr>
+              <th>EYE</th>
+              <th>SPH</th>
+              <th>CYL</th>
+              <th>AXIS</th>
+              <th>ADD</th>
+              <th>IPD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="eye-label">R</td>
+              <td><input type="text" class="r-sph" value="${escapeAttr(g.rx?.R?.sph || '')}" placeholder="0.00" /></td>
+              <td><input type="text" class="r-cyl" value="${escapeAttr(g.rx?.R?.cyl || '')}" placeholder="0.00" /></td>
+              <td><input type="text" class="r-axis" value="${escapeAttr(g.rx?.R?.axis || '')}" placeholder="180" /></td>
+              <td><input type="text" class="r-add" value="${escapeAttr(g.rx?.R?.add || '')}" placeholder="+0.00" /></td>
+              <td><input type="text" class="r-ipd" value="${escapeAttr(g.rx?.R?.ipd || '')}" placeholder="32" /></td>
+            </tr>
+            <tr>
+              <td class="eye-label">L</td>
+              <td><input type="text" class="l-sph" value="${escapeAttr(g.rx?.L?.sph || '')}" placeholder="0.00" /></td>
+              <td><input type="text" class="l-cyl" value="${escapeAttr(g.rx?.L?.cyl || '')}" placeholder="0.00" /></td>
+              <td><input type="text" class="l-axis" value="${escapeAttr(g.rx?.L?.axis || '')}" placeholder="180" /></td>
+              <td><input type="text" class="l-add" value="${escapeAttr(g.rx?.L?.add || '')}" placeholder="+0.00" /></td>
+              <td><input type="text" class="l-ipd" value="${escapeAttr(g.rx?.L?.ipd || '')}" placeholder="32" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    container.appendChild(block);
+    updateGlassesNumbers();
+  }
+
+  function removeGlassesBlock(btn) {
+    const container = document.getElementById('glassesContainer');
+    if (container.children.length <= 1) {
+      showToast('يجب أن يحتوي الزبون على نظارة واحدة على الأقل');
+      return;
+    }
+    btn.closest('.glasses-block').remove();
+    updateGlassesNumbers();
+  }
+
+  function updateGlassesNumbers() {
+    const blocks = document.querySelectorAll('#glassesContainer .glasses-block');
+    blocks.forEach((b, idx) => {
+      b.querySelector('.g-num').textContent = (idx + 1);
+      const rmBtn = b.querySelector('.remove-glasses-btn');
+      rmBtn.style.display = blocks.length > 1 ? 'inline-flex' : 'none';
+    });
+  }
+
+  function collectGlassesFromForm() {
+    const blocks = document.querySelectorAll('#glassesContainer .glasses-block');
+    const list = [];
+    blocks.forEach(b => {
+      list.push({
+        date: b.querySelector('.g-date').value.trim(),
+        lensFrame: b.querySelector('.g-lensFrame').value.trim(),
+        price: b.querySelector('.g-price').value.trim(),
+        branch: b.querySelector('.g-branch').value.trim(),
+        employee: b.querySelector('.g-employee').value.trim(),
+        notes: b.querySelector('.g-notes').value.trim(),
+        rx: {
+          R: {
+            sph: b.querySelector('.r-sph').value.trim(),
+            cyl: b.querySelector('.r-cyl').value.trim(),
+            axis: b.querySelector('.r-axis').value.trim(),
+            add: b.querySelector('.r-add').value.trim(),
+            ipd: b.querySelector('.r-ipd').value.trim(),
+          },
+          L: {
+            sph: b.querySelector('.l-sph').value.trim(),
+            cyl: b.querySelector('.l-cyl').value.trim(),
+            axis: b.querySelector('.l-axis').value.trim(),
+            add: b.querySelector('.l-add').value.trim(),
+            ipd: b.querySelector('.l-ipd').value.trim(),
+          }
         }
+      });
+    });
+    return list;
+  }
 
-        // =========================================================
-        // التنقل بين الصفحات (Navigation)
-        // =========================================================
-        function navigateTo(viewName) {
-            const views = ['home', 'search', 'profile', 'form'];
-            views.forEach(v => {
-                document.getElementById(`view-${v}`).classList.add('hidden');
-            });
-            document.getElementById(`view-${viewName}`).classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+  function saveCustomer(e) {
+    e.preventDefault();
+    const editId = document.getElementById('editCustomerId').value;
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    const glasses = collectGlassesFromForm();
 
-            if (viewName === 'search') {
-                const searchInput = document.getElementById('search-input');
-                handleSearch(searchInput.value);
-                setTimeout(() => searchInput.focus(), 100);
-            }
-            lucide.createIcons();
-        }
+    if (!name || !phone) {
+      showToast('يرجى إدخال اسم الزبون ورقم التليفون');
+      return;
+    }
 
-        // =========================================================
-        // الصفحة الرئيسية والإحصائيات
-        // =========================================================
-        function updateDashboardStats() {
-            document.getElementById('total-customers-count').textContent = customers.length;
-        }
+    if (editId) {
+      const idx = customers.findIndex(c => c.id === editId);
+      if (idx !== -1) {
+        customers[idx] = { ...customers[idx], name, phone, glasses };
+        showToast('تم تحديث بيانات الزبون ونظاراته بنجاح');
+      }
+    } else {
+      customers.unshift({
+        id: Date.now().toString(),
+        name,
+        phone,
+        glasses
+      });
+      showToast('تم حفظ الزبون ونظاراته بنجاح');
+    }
 
-        function renderRecentCustomers() {
-            const container = document.getElementById('recent-customers-list');
-            if (customers.length === 0) {
-                container.innerHTML = `
-                    <div class="py-8 text-center text-slate-400 text-sm">
-                        لا يوجد زبائن مسجلين حالياً. اضغطي على "تسجيل زبون جديد" للبدء.
-                    </div>
-                `;
-                return;
-            }
+    persistData();
+    resetForm();
+    renderCustomers();
+  }
 
-            const recent = [...customers].slice(0, 4);
-            container.innerHTML = recent.map(c => `
-                <div onclick="openCustomerProfile('${c.id}')" class="py-3.5 px-2 hover:bg-slate-50 rounded-xl flex items-center justify-between cursor-pointer transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-optical-50 text-optical-700 font-extrabold flex items-center justify-center border border-optical-200/70">
-                            ${escapeHTML(c.name.charAt(0))}
-                        </div>
-                        <div>
-                            <div class="font-bold text-navy-900 group-hover:text-optical-700 transition">${escapeHTML(c.name)}</div>
-                            <div class="text-xs text-slate-500 flex items-center gap-2 mt-0.5">
-                                <span dir="ltr">${escapeHTML(c.phone)}</span>
-                                <span>•</span>
-                                <span>${escapeHTML(c.lensType || 'بدون تفاصيل عدسة')}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="hidden sm:inline-block text-xs font-semibold text-slate-400">${escapeHTML(c.date || '')}</span>
-                        <i data-lucide="chevron-left" class="w-4 h-4 text-slate-400 group-hover:text-optical-600 group-hover:-translate-x-1 transition"></i>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
+  function resetForm() {
+    document.getElementById('editCustomerId').value = '';
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerPhone').value = '';
+    document.getElementById('formTitle').textContent = 'إضافة سجل زبون جديد';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+    const container = document.getElementById('glassesContainer');
+    container.innerHTML = '';
+    addGlassesBlock();
+  }
 
-        // =========================================================
-        // البحث عن زبون (Search Logic)
-        // =========================================================
-        function handleSearch(query) {
-            const q = query.trim().toLowerCase();
-            const clearBtn = document.getElementById('clear-search-btn');
-            clearBtn.classList.toggle('hidden', q.length === 0);
+  function editCustomer(id, appendNewGlasses = false) {
+    const c = customers.find(item => item.id === id);
+    if (!c) return;
 
-            const filtered = customers.filter(c => {
-                const nameMatch = (c.name || '').toLowerCase().includes(q);
-                const phoneMatch = (c.phone || '').replace(/\s+/g, '').includes(q.replace(/\s+/g, ''));
-                return nameMatch || phoneMatch;
-            });
+    document.getElementById('editCustomerId').value = c.id;
+    document.getElementById('customerName').value = c.name;
+    document.getElementById('customerPhone').value = c.phone;
+    document.getElementById('formTitle').textContent = appendNewGlasses
+      ? `إضافة نظارة جديدة للزبون: ${c.name}`
+      : `تعديل ملف الزبون: ${c.name}`;
+    document.getElementById('cancelEditBtn').style.display = 'inline-flex';
 
-            const countLabel = document.getElementById('search-results-count');
-            countLabel.textContent = q
-                ? `تم العثور على ${filtered.length} نتيجة مطابقة`
-                : `إجمالي الزبائن المسجلين: ${filtered.length}`;
+    const container = document.getElementById('glassesContainer');
+    container.innerHTML = '';
+    c.glasses.forEach(g => addGlassesBlock(g));
+    if (appendNewGlasses) {
+      addGlassesBlock();
+    }
 
-            const grid = document.getElementById('search-results-grid');
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full bg-white rounded-3xl p-10 text-center border border-slate-200 space-y-3">
-                        <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
-                            <i data-lucide="user-x" class="w-7 h-7"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-navy-900">لا توجد نتائج مطابقة لـ "${escapeHTML(query)}"</h3>
-                        <p class="text-sm text-slate-500">تأكدي من الاسم أو رقم التليفون، أو قومي بتسجيله كزبون جديد.</p>
-                        <button onclick="openNewCustomerForm('${escapeHTML(query)}')" class="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-optical-600 text-white text-sm font-bold hover:bg-optical-700 transition">
-                            <i data-lucide="user-plus" class="w-4 h-4"></i>
-                            <span>تسجيل كزبون جديد</span>
-                        </button>
-                    </div>
-                `;
-                lucide.createIcons();
-                return;
-            }
+    document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+  }
 
-            grid.innerHTML = filtered.map(c => `
-                <div onclick="openCustomerProfile('${c.id}')" class="bg-white hover:border-optical-500 border-2 border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md cursor-pointer transition-all group">
-                    <div class="flex items-start justify-between gap-3">
-                        <div class="flex items-center gap-3.5">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-optical-50 to-slate-100 border border-optical-200 text-optical-800 font-extrabold text-lg flex items-center justify-center shrink-0">
-                                ${escapeHTML(c.name.charAt(0))}
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-extrabold text-navy-900 group-hover:text-optical-700 transition">${escapeHTML(c.name)}</h3>
-                                <div class="text-sm font-bold text-slate-600 mt-0.5 flex items-center gap-1.5" dir="ltr">
-                                    <i data-lucide="phone" class="w-3.5 h-3.5 text-optical-600"></i>
-                                    <span>${escapeHTML(c.phone)}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">
-                            ${escapeHTML(c.date || '')}
-                        </span>
-                    </div>
+  function deleteCustomer(id) {
+    if (!confirm('هل أنتِ متأكدة من حذف ملف هذا الزبون وجميع نظاراته؟')) return;
+    customers = customers.filter(c => c.id !== id);
+    persistData();
+    renderCustomers();
+    showToast('تم حذف سجل الزبون');
+  }
 
-                    <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                        <div class="flex items-center gap-2 truncate">
-                            <span class="font-bold text-navy-800">${escapeHTML(c.lensType || 'نظارة طبية')}</span>
-                            ${c.company ? `<span>• ${escapeHTML(c.company)}</span>` : ''}
-                        </div>
-                        <span class="font-extrabold text-optical-700 shrink-0">${escapeHTML(c.price || '')}</span>
-                    </div>
-                </div>
-            `).join('');
+  function renderCustomers() {
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    const listEl = document.getElementById('customersList');
+    const filtered = customers.filter(c =>
+      c.name.toLowerCase().includes(q) || c.phone.toLowerCase().includes(q)
+    );
 
-            lucide.createIcons();
-        }
+    document.getElementById('customerCount').textContent = `${filtered.length} زبون`;
 
-        function clearSearch() {
-            const input = document.getElementById('search-input');
-            input.value = '';
-            handleSearch('');
-            input.focus();
-        }
+    if (filtered.length === 0) {
+      listEl.innerHTML = `<div class="empty-state">لا توجد سجلات مطابقة حالياً.</div>`;
+      return;
+    }
 
-        // =========================================================
-        // عرض ملف الزبون الكامل (Customer Profile)
-        // =========================================================
-        function openCustomerProfile(id) {
-            const customer = customers.find(c => c.id === id);
-            if (!customer) return;
+    listEl.innerHTML = filtered.map(c => {
+      const glassesHTML = c.glasses.map((g, i) => `
+        <div class="saved-glasses-card">
+          <div class="saved-glasses-head">
+            <span>👓 نظارة رقم (${i + 1}) ${g.date ? '— ' + escapeHTML(g.date) : ''}</span>
+            <span>${g.price ? 'السعر: ' + escapeHTML(g.price) : ''}</span>
+          </div>
+          <div class="meta-tags">
+            ${g.lensFrame ? `<span class="meta-tag"><strong>العدسة/الإطار:</strong> ${escapeHTML(g.lensFrame)}</span>` : ''}
+            ${g.branch ? `<span class="meta-tag"><strong>الفرع:</strong> ${escapeHTML(g.branch)}</span>` : ''}
+            ${g.employee ? `<span class="meta-tag"><strong>الموظف:</strong> ${escapeHTML(g.employee)}</span>` : ''}
+            ${g.notes ? `<span class="meta-tag"><strong>ملاحظات:</strong> ${escapeHTML(g.notes)}</span>` : ''}
+          </div>
+          <table class="mini-rx">
+            <thead>
+              <tr>
+                <th>EYE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>IPD</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>R</strong></td>
+                <td>${escapeHTML(g.rx?.R?.sph || '-')}</td>
+                <td>${escapeHTML(g.rx?.R?.cyl || '-')}</td>
+                <td>${escapeHTML(g.rx?.R?.axis || '-')}</td>
+                <td>${escapeHTML(g.rx?.R?.add || '-')}</td>
+                <td>${escapeHTML(g.rx?.R?.ipd || '-')}</td>
+              </tr>
+              <tr>
+                <td><strong>L</strong></td>
+                <td>${escapeHTML(g.rx?.L?.sph || '-')}</td>
+                <td>${escapeHTML(g.rx?.L?.cyl || '-')}</td>
+                <td>${escapeHTML(g.rx?.L?.axis || '-')}</td>
+                <td>${escapeHTML(g.rx?.L?.add || '-')}</td>
+                <td>${escapeHTML(g.rx?.L?.ipd || '-')}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `).join('');
 
-            currentCustomerId = id;
+      return `
+        <div class="customer-item">
+          <div class="customer-top">
+            <div>
+              <h3 class="customer-name">${escapeHTML(c.name)} <span style="font-size:0.82rem; color:var(--accent);">(${c.glasses.length} نظارة)</span></h3>
+              <div class="customer-phone">📞 ${escapeHTML(c.phone)}</div>
+            </div>
+            <div class="customer-actions">
+              <button type="button" class="btn btn-accent btn-sm" onclick="editCustomer('${c.id}', true)">➕ نظارة جديدة</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="editCustomer('${c.id}', false)">✏️ تعديل</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="deleteCustomer('${c.id}')">🗑️ حذف</button>
+            </div>
+          </div>
+          ${glassesHTML}
+        </div>
+      `;
+    }).join('');
+  }
 
-            document.getElementById('profile-avatar').textContent = customer.name.charAt(0);
-            document.getElementById('profile-name').textContent = customer.name;
-            document.getElementById('profile-phone').textContent = customer.phone;
-            document.getElementById('profile-date').textContent = customer.date || 'غير محدد';
-            document.getElementById('profile-date-box').textContent = customer.date || 'غير محدد';
-            document.getElementById('profile-price').textContent = customer.price || 'غير محدد';
-            
-            const branchBadge = document.getElementById('profile-branch-badge');
-            if (customer.branch) {
-                branchBadge.textContent = customer.branch;
-                branchBadge.classList.remove('hidden');
-            } else {
-                branchBadge.classList.add('hidden');
-            }
+  function exportJSON() {
+    const blob = new Blob([JSON.stringify(customers, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `naqaa-optics-backup-${todayISO()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('تم تنزيل النسخة الاحتياطية');
+  }
 
-            // تعبئة جدول القياسات
-            const rx = customer.rx || { ipd: '', r: {}, l: {} };
-            document.getElementById('profile-ipd').textContent = rx.ipd || '--';
+  function importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (!Array.isArray(imported)) throw new Error('Invalid format');
+        customers = imported.map(normalizeCustomer);
+        persistData();
+        renderCustomers();
+        showToast('تم استيراد البيانات بنجاح');
+      } catch (err) {
+        alert('ملف النسخة الاحتياطية غير صالح.');
+      }
+      event.target.value = '';
+    };
+    reader.readAsText(file);
+  }
 
-            document.getElementById('prof-r-sph').textContent = rx.r?.sph || '--';
-            document.getElementById('prof-r-cyl').textContent = rx.r?.cyl || '--';
-            document.getElementById('prof-r-axis').textContent = rx.r?.axis || '--';
-            document.getElementById('prof-r-add').textContent = rx.r?.add || '--';
+  function escapeHTML(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
 
-            document.getElementById('prof-l-sph').textContent = rx.l?.sph || '--';
-            document.getElementById('prof-l-cyl').textContent = rx.l?.cyl || '--';
-            document.getElementById('prof-l-axis').textContent = rx.l?.axis || '--';
-            document.getElementById('prof-l-add').textContent = rx.l?.add || '--';
+  function escapeAttr(str) {
+    return String(str).replace(/"/g, '&quot;');
+  }
 
-            // تعبئة بقية البيانات
-            document.getElementById('profile-lens-type').textContent = customer.lensType || 'غير محدد';
-            document.getElementById('profile-company').textContent = customer.company || 'غير محدد';
-            document.getElementById('profile-frame-type').textContent = customer.frameType || 'غير محدد';
-            document.getElementById('profile-branch').textContent = customer.branch || 'غير محدد';
-            document.getElementById('profile-employee').textContent = customer.employee || 'غير محدد';
-            document.getElementById('profile-notes').textContent = customer.notes || 'لا توجد ملاحظات مسجلة.';
-
-            // ربط أزرار التعديل والحذف
-            document.getElementById('btn-edit-customer').onclick = () => openEditCustomerForm(id);
-            document.getElementById('btn-delete-customer').onclick = () => requestDeleteCustomer(id);
-
-            navigateTo('profile');
-        }
-
-        // =========================================================
-        // نموذج تسجيل زبون جديد وتعديل البيانات
-        // =========================================================
-        function openNewCustomerForm(prefillText = '') {
-            document.getElementById('customer-form').reset();
-            document.getElementById('edit-customer-id').value = '';
-            document.getElementById('form-page-title').textContent = 'تسجيل زبون جديد';
-            
-            // تعيين تاريخ اليوم تلقائياً
-            document.getElementById('inp-date').value = new Date().toISOString().split('T')[0];
-
-            // إذا جاء من البحث، نملأ الاسم أو الرقم تلقائياً
-            if (prefillText) {
-                if (/^\d+$/.test(prefillText.trim())) {
-                    document.getElementById('inp-phone').value = prefillText.trim();
-                } else {
-                    document.getElementById('inp-name').value = prefillText.trim();
-                }
-            }
-
-            navigateTo('form');
-        }
-
-        function openEditCustomerForm(id) {
-            const c = customers.find(item => item.id === id);
-            if (!c) return;
-
-            document.getElementById('edit-customer-id').value = c.id;
-            document.getElementById('form-page-title').textContent = 'تعديل بيانات الزبون';
-
-            document.getElementById('inp-name').value = c.name || '';
-            document.getElementById('inp-phone').value = c.phone || '';
-            document.getElementById('inp-date').value = c.date || '';
-            
-            const rx = c.rx || { ipd: '', r: {}, l: {} };
-            document.getElementById('inp-ipd').value = rx.ipd || '';
-            
-            document.getElementById('inp-r-sph').value = rx.r?.sph || '';
-            document.getElementById('inp-r-cyl').value = rx.r?.cyl || '';
-            document.getElementById('inp-r-axis').value = rx.r?.axis || '';
-            document.getElementById('inp-r-add').value = rx.r?.add || '';
-
-            document.getElementById('inp-l-sph').value = rx.l?.sph || '';
-            document.getElementById('inp-l-cyl').value = rx.l?.cyl || '';
-            document.getElementById('inp-l-axis').value = rx.l?.axis || '';
-            document.getElementById('inp-l-add').value = rx.l?.add || '';
-
-            document.getElementById('inp-lens-type').value = c.lensType || '';
-            document.getElementById('inp-company').value = c.company || '';
-            document.getElementById('inp-frame-type').value = c.frameType || '';
-            document.getElementById('inp-price').value = c.price || '';
-            document.getElementById('inp-branch').value = c.branch || '';
-            document.getElementById('inp-employee').value = c.employee || '';
-            document.getElementById('inp-notes').value = c.notes || '';
-
-            navigateTo('form');
-        }
-
-        function cancelForm() {
-            const editId = document.getElementById('edit-customer-id').value;
-            if (editId) {
-                openCustomerProfile(editId);
-            } else {
-                navigateTo('home');
-            }
-        }
-
-        function saveCustomer(event) {
-            event.preventDefault();
-
-            const editId = document.getElementById('edit-customer-id').value;
-            const customerObj = {
-                id: editId || 'cust-' + Date.now(),
-                name: document.getElementById('inp-name').value.trim(),
-                phone: document.getElementById('inp-phone').value.trim(),
-                date: document.getElementById('inp-date').value,
-                lensType: document.getElementById('inp-lens-type').value.trim(),
-                company: document.getElementById('inp-company').value.trim(),
-                frameType: document.getElementById('inp-frame-type').value.trim(),
-                price: document.getElementById('inp-price').value.trim(),
-                branch: document.getElementById('inp-branch').value.trim(),
-                employee: document.getElementById('inp-employee').value.trim(),
-                notes: document.getElementById('inp-notes').value.trim(),
-                rx: {
-                    ipd: document.getElementById('inp-ipd').value.trim(),
-                    r: {
-                        sph: document.getElementById('inp-r-sph').value.trim(),
-                        cyl: document.getElementById('inp-r-cyl').value.trim(),
-                        axis: document.getElementById('inp-r-axis').value.trim(),
-                        add: document.getElementById('inp-r-add').value.trim(),
-                    },
-                    l: {
-                        sph: document.getElementById('inp-l-sph').value.trim(),
-                        cyl: document.getElementById('inp-l-cyl').value.trim(),
-                        axis: document.getElementById('inp-l-axis').value.trim(),
-                        add: document.getElementById('inp-l-add').value.trim(),
-                    }
-                }
-            };
-
-            if (editId) {
-                const idx = customers.findIndex(c => c.id === editId);
-                if (idx !== -1) customers[idx] = customerObj;
-                showToast('تم تحديث بيانات الزبون بنجاح');
-            } else {
-                customers.unshift(customerObj);
-                showToast('تم تسجيل الزبون الجديد بنجاح');
-            }
-
-            saveToStorage();
-            openCustomerProfile(customerObj.id);
-        }
-
-        // =========================================================
-        // الحذف والنسخ الاحتياطي
-        // =========================================================
-        function requestDeleteCustomer(id) {
-            const modal = document.getElementById('confirm-modal');
-            modal.classList.remove('hidden');
-            document.getElementById('confirm-delete-action').onclick = () => {
-                customers = customers.filter(c => c.id !== id);
-                saveToStorage();
-                closeConfirmModal();
-                showToast('تم حذف سجل الزبون');
-                navigateTo('search');
-            };
-        }
-
-        function closeConfirmModal() {
-            document.getElementById('confirm-modal').classList.add('hidden');
-        }
-
-        function toggleBackupModal(show) {
-            document.getElementById('backup-modal').classList.toggle('hidden', !show);
-        }
-
-        function exportToJSON() {
-            const dataStr = JSON.stringify(customers, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `optical-customers-backup-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('تم تنزيل النسخة الاحتياطية');
-        }
-
-        function exportToCSV() {
-            const headers = [
-                'الاسم', 'رقم التليفون', 'التاريخ', 'نوع العدسة', 'الشركة', 'نوع الإطار', 'السعر', 'الفرع', 'الموظف',
-                'IPD', 'R_SPH', 'R_CYL', 'R_AXIS', 'R_ADD', 'L_SPH', 'L_CYL', 'L_AXIS', 'L_ADD', 'ملاحظات'
-            ];
-
-            const rows = customers.map(c => [
-                c.name, c.phone, c.date, c.lensType, c.company, c.frameType, c.price, c.branch, c.employee,
-                c.rx?.ipd || '',
-                c.rx?.r?.sph || '', c.rx?.r?.cyl || '', c.rx?.r?.axis || '', c.rx?.r?.add || '',
-                c.rx?.l?.sph || '', c.rx?.l?.cyl || '', c.rx?.l?.axis || '', c.rx?.l?.add || '',
-                (c.notes || '').replace(/\n/g, ' ')
-            ].map(val => `"${String(val || '').replace(/"/g, '""')}"`).join(','));
-
-            // إضافة BOM لدعم اللغة العربية في برنامج Excel
-            const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\n');
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `optical-customers-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('تم تصدير ملف Excel بنجاح');
-        }
-
-        function importFromJSON(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const imported = JSON.parse(e.target.result);
-                    if (Array.isArray(imported)) {
-                        customers = imported;
-                        saveToStorage();
-                        toggleBackupModal(false);
-                        navigateTo('home');
-                        showToast(`تم استعادة ${imported.length} سجل بنجاح`);
-                    } else {
-                        showToast('صيغة الملف غير صحيحة');
-                    }
-                } catch (err) {
-                    showToast('تعذر قراءة الملف المختار');
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
-
-        // أدوات مساعدة
-        function escapeHTML(str) {
-            if (!str) return '';
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').textContent = msg;
-            toast.classList.remove('hidden');
-            toast.classList.add('flex');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                toast.classList.remove('flex');
-            }, 3000);
-        }
-
-        window.onload = initApp;
-    </script>
+  loadData();
+  resetForm();
+  renderCustomers();
+</script>
 </body>
 </html>
