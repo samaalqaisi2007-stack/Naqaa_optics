@@ -2,21 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>بصريات النقاء | سجل الزبائن</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بصريات النقاء - سجل الزبائن والقياسات</title>
   <style>
     :root {
-      --primary: #155e75;
-      --primary-dark: #0e4354;
-      --accent: #0f766e;
-      --bg: #f1f5f9;
+      --primary: #0f5c6e;
+      --primary-dark: #0a4250;
+      --accent: #198754;
+      --bg: #f4f7f8;
       --card: #ffffff;
-      --text: #0f172a;
-      --muted: #475569;
-      --border: #cbd5e1;
-      --danger: #b91c1c;
-      --danger-bg: #fee2e2;
-      --soft: #f8fafc;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #dbe3e8;
+      --danger: #dc2626;
       --radius: 12px;
     }
 
@@ -29,49 +27,153 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      padding-bottom: 48px;
+      padding-bottom: 40px;
     }
 
-    .topbar {
-      background: var(--primary);
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: #fff;
-      padding: 16px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+      padding: 18px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
 
-    .topbar-inner {
-      max-width: 1020px;
+    .header-inner {
+      max-width: 1000px;
       margin: 0 auto;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .topbar h1 {
+    header h1 {
       margin: 0;
-      font-size: 1.35rem;
+      font-size: 1.45rem;
     }
 
-    .topbar span {
-      font-size: 0.85rem;
+    header p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
       opacity: 0.9;
     }
 
-    .btn {
+    .container {
+      max-width: 1000px;
+      margin: 22px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 1.15rem;
+      color: var(--primary);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #fff;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 92, 110, 0.12);
+    }
+
+    textarea {
+      min-height: 75px;
+      resize: vertical;
+    }
+
+    .rx-table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table.rx-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 520px;
+      direction: ltr;
+      text-align: center;
+    }
+
+    table.rx-table th,
+    table.rx-table td {
+      border: 1px solid var(--border);
+      padding: 8px;
+    }
+
+    table.rx-table th {
+      background: #eef5f7;
+      color: var(--primary-dark);
+      font-size: 0.88rem;
+    }
+
+    table.rx-table td.eye-label {
+      font-weight: 700;
+      background: #f8fafc;
+      color: var(--primary);
+      width: 60px;
+    }
+
+    table.rx-table input {
+      padding: 7px 8px;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
       border: none;
-      border-radius: 9px;
-      padding: 9px 14px;
-      font-size: 0.9rem;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .btn-primary {
@@ -83,315 +185,86 @@
       background: var(--primary-dark);
     }
 
-    .btn-accent {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-light {
-      background: rgba(255, 255, 255, 0.16);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-    }
-
-    .btn-outline {
-      background: #fff;
+    .btn-secondary {
+      background: #e2e8f0;
       color: var(--text);
-      border: 1px solid var(--border);
     }
 
-    .btn-danger {
-      background: var(--danger-bg);
-      color: var(--danger);
-      border: 1px solid #fecaca;
-    }
-
-    .btn-sm {
-      padding: 6px 11px;
-      font-size: 0.83rem;
-    }
-
-    .wrap {
-      max-width: 1020px;
-      margin: 20px auto;
-      padding: 0 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
-    }
-
-    .card-title {
-      margin: 0 0 16px;
-      font-size: 1.1rem;
-      color: var(--primary);
-      padding-bottom: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    @media (max-width: 680px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .field.full {
-      grid-column: 1 / -1;
-    }
-
-    .field label {
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--muted);
-    }
-
-    .field input, .field textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      font-size: 0.95rem;
-      color: var(--text);
-      background: #fff;
-    }
-
-    .field input:focus, .field textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    .rx-box {
-      margin-top: 16px;
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-    }
-
-    .rx-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 500px;
-      direction: ltr;
-      text-align: center;
-    }
-
-    .rx-table th {
-      background: var(--soft);
-      color: var(--primary);
-      padding: 9px 6px;
+    .btn-backup {
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 8px 12px;
       font-size: 0.85rem;
-      border-bottom: 1px solid var(--border);
     }
 
-    .rx-table td {
-      padding: 7px 6px;
-      border-top: 1px solid #f1f5f9;
+    .btn-edit {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 6px 12px;
+      font-size: 0.85rem;
     }
 
-    .rx-table td.eye {
-      font-weight: 700;
-      background: var(--soft);
-      width: 52px;
+    .btn-delete {
+      background: #fee2e2;
+      color: var(--danger);
+      padding: 6px 12px;
+      font-size: 0.85rem;
     }
 
-    .rx-table input {
-      width: 100%;
-      padding: 7px 6px;
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      text-align: center;
-      font-size: 0.9rem;
-      direction: ltr;
-    }
-
-    .actions-row {
-      margin-top: 16px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .search-row {
+    .search-bar {
       display: flex;
       gap: 10px;
       margin-bottom: 16px;
       flex-wrap: wrap;
     }
 
-    .search-row input {
+    .search-bar input {
       flex: 1;
-      min-width: 200px;
-      padding: 10px 13px;
+      min-width: 220px;
+    }
+
+    .record-item {
       border: 1px solid var(--border);
-      border-radius: 9px;
-      font-size: 0.95rem;
-    }
-
-    .customer-row {
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      margin-bottom: 12px;
-      background: #fff;
-      overflow: hidden;
-    }
-
-    .customer-trigger {
-      width: 100%;
-      background: var(--soft);
-      border: none;
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      text-align: right;
-      gap: 10px;
-    }
-
-    .customer-trigger:hover {
-      background: #eef2f6;
-    }
-
-    .c-main {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .c-name {
-      font-weight: 700;
-      font-size: 1.03rem;
-      color: var(--primary);
-    }
-
-    .c-phone {
-      font-size: 0.88rem;
-      color: var(--muted);
-      direction: ltr;
-      text-align: right;
-    }
-
-    .c-badge {
-      font-size: 0.82rem;
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
-
-    .customer-details {
-      display: none;
-      padding: 16px;
-      border-top: 1px solid var(--border);
-      background: #fff;
-    }
-
-    .customer-details.open {
-      display: block;
-    }
-
-    .glasses-card {
-      border: 1px solid #e2e8f0;
-      background: #fafbfd;
       border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #fcfdfd;
     }
 
-    .glasses-top {
+    .record-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
-      font-weight: 700;
-      color: var(--accent);
-      font-size: 0.92rem;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 8px;
-      font-size: 0.88rem;
       margin-bottom: 10px;
     }
 
-    .info-item {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      padding: 7px 10px;
+    .record-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .record-phone {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 2px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+      font-size: 0.88rem;
+      margin: 10px 0;
+      background: #f8fafc;
+      padding: 10px;
       border-radius: 8px;
     }
 
-    .view-rx {
-      width: 100%;
-      border-collapse: collapse;
-      direction: ltr;
-      text-align: center;
-      font-size: 0.84rem;
-      background: #fff;
-    }
-
-    .view-rx th, .view-rx td {
-      border: 1px solid #cbd5e1;
-      padding: 5px;
-    }
-
-    .view-rx th {
-      background: var(--soft);
-      color: var(--primary);
-    }
-
-    .customer-footer-actions {
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px dashed var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .add-glasses-drawer {
-      display: none;
-      margin-top: 14px;
-      padding: 14px;
-      border: 1.5px solid var(--accent);
-      border-radius: 10px;
-      background: #f0fdfa;
-    }
-
-    .add-glasses-drawer.open {
-      display: block;
-    }
-
-    .empty {
+    .empty-state {
       text-align: center;
       color: var(--muted);
       padding: 24px;
@@ -400,461 +273,348 @@
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <div>
-      <h1>بصريات النقاء</h1>
-      <span>سجل الزبائن والقياسات</span>
-    </div>
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <button type="button" class="btn btn-light btn-sm" onclick="exportData()">تصدير JSON</button>
-      <button type="button" class="btn btn-light btn-sm" onclick="document.getElementById('importInput').click()">استيراد JSON</button>
-      <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)" />
-    </div>
-  </div>
-</header>
-
-<div class="wrap">
-  <!-- نموذج إضافة زبون جديد -->
-  <div class="card">
-    <div class="card-title">
-      <span>إضافة زبون جديد</span>
-    </div>
-    <form id="newCustomerForm" onsubmit="addNewCustomer(event)">
-      <div class="form-grid">
-        <div class="field">
-          <label for="newName">اسم الزبون</label>
-          <input type="text" id="newName" required placeholder="الاسم الكامل" />
-        </div>
-        <div class="field">
-          <label for="newPhone">رقم التليفون</label>
-          <input type="tel" id="newPhone" required placeholder="رقم الهاتف" />
-        </div>
-        <div class="field">
-          <label for="newDate">التاريخ</label>
-          <input type="date" id="newDate" />
-        </div>
-        <div class="field">
-          <label for="newPrice">السعر</label>
-          <input type="text" id="newPrice" placeholder="السعر" />
-        </div>
-        <div class="field">
-          <label for="newLensFrame">تفاصيل العدسة والإطار</label>
-          <input type="text" id="newLensFrame" placeholder="نوع العدسة والإطار" />
-        </div>
-        <div class="field">
-          <label for="newBranch">الفرع</label>
-          <input type="text" id="newBranch" placeholder="الفرع" />
-        </div>
-        <div class="field">
-          <label for="newEmployee">الموظف</label>
-          <input type="text" id="newEmployee" placeholder="اسم الموظف" />
-        </div>
-        <div class="field">
-          <label for="newNotes">الملاحظات</label>
-          <input type="text" id="newNotes" placeholder="ملاحظات" />
-        </div>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>بصريات النقاء</h1>
+        <p>نظام حفظ بيانات الزبائن وقياسات النظارات</p>
       </div>
-
-      <div class="rx-box">
-        <table class="rx-table" id="newRxTable">
-          <thead>
-            <tr>
-              <th>EYE</th>
-              <th>SPH</th>
-              <th>CYL</th>
-              <th>AXIS</th>
-              <th>ADD</th>
-              <th>IPD</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="eye">R</td>
-              <td><input type="text" data-eye="R" data-field="sph" /></td>
-              <td><input type="text" data-eye="R" data-field="cyl" /></td>
-              <td><input type="text" data-eye="R" data-field="axis" /></td>
-              <td><input type="text" data-eye="R" data-field="add" /></td>
-              <td><input type="text" data-eye="R" data-field="ipd" /></td>
-            </tr>
-            <tr>
-              <td class="eye">L</td>
-              <td><input type="text" data-eye="L" data-field="sph" /></td>
-              <td><input type="text" data-eye="L" data-field="cyl" /></td>
-              <td><input type="text" data-eye="L" data-field="axis" /></td>
-              <td><input type="text" data-eye="L" data-field="add" /></td>
-              <td><input type="text" data-eye="L" data-field="ipd" /></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="actions" style="margin:0;">
+        <button class="btn-backup" onclick="exportData()">تصدير نسخة احتياطية</button>
+        <button class="btn-backup" onclick="document.getElementById('importFile').click()">استيراد نسخة</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" />
       </div>
-
-      <div class="actions-row">
-        <button type="submit" class="btn btn-primary">حفظ الزبون</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- البحث وعرض الزبائن -->
-  <div class="card">
-    <div class="card-title">
-      <span>الزبائن المحفوظون</span>
-      <span id="totalCount" style="font-size:0.88rem; color:var(--muted);">0</span>
     </div>
+  </header>
 
-    <div class="search-row">
-      <input type="text" id="searchBox" placeholder="بحث بالاسم أو رقم التليفون..." oninput="renderList()" />
-      <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('searchBox').value=''; renderList();">مسح</button>
-    </div>
+  <div class="container">
+    <div class="card">
+      <h2 id="formTitle">إضافة زبون جديد</h2>
+      <form id="customerForm" onsubmit="saveRecord(event)">
+        <input type="hidden" id="editId" />
 
-    <div id="customersContainer"></div>
-  </div>
-</div>
-
-<script>
-  const KEY = 'naqaa_optics_data_v1';
-  let data = [];
-  let openCustomerIds = new Set();
-  let openAddGlassesIds = new Set();
-
-  function today() {
-    return new Date().toISOString().split('T')[0];
-  }
-
-  function emptyRx() {
-    return {
-      R: { sph: '', cyl: '', axis: '', add: '', ipd: '' },
-      L: { sph: '', cyl: '', axis: '', add: '', ipd: '' }
-    };
-  }
-
-  function normalize(item) {
-    if (Array.isArray(item.glasses)) return item;
-    return {
-      id: item.id || String(Date.now() + Math.random()),
-      name: item.name || '',
-      phone: item.phone || '',
-      glasses: [{
-        date: item.date || today(),
-        lensFrame: item.lensFrame || '',
-        price: item.price || '',
-        branch: item.branch || '',
-        employee: item.employee || '',
-        notes: item.notes || '',
-        rx: item.rx || emptyRx()
-      }]
-    };
-  }
-
-  function load() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      const arr = raw ? JSON.parse(raw) : [];
-      data = Array.isArray(arr) ? arr.map(normalize) : [];
-    } catch {
-      data = [];
-    }
-  }
-
-  function save() {
-    localStorage.setItem(KEY, JSON.stringify(data));
-  }
-
-  function readRxFromTable(tableEl) {
-    const rx = emptyRx();
-    tableEl.querySelectorAll('input[data-eye]').forEach(inp => {
-      const eye = inp.getAttribute('data-eye');
-      const field = inp.getAttribute('data-field');
-      rx[eye][field] = inp.value.trim();
-    });
-    return rx;
-  }
-
-  function addNewCustomer(e) {
-    e.preventDefault();
-    const name = document.getElementById('newName').value.trim();
-    const phone = document.getElementById('newPhone').value.trim();
-    if (!name || !phone) return;
-
-    const firstGlasses = {
-      date: document.getElementById('newDate').value || today(),
-      lensFrame: document.getElementById('newLensFrame').value.trim(),
-      price: document.getElementById('newPrice').value.trim(),
-      branch: document.getElementById('newBranch').value.trim(),
-      employee: document.getElementById('newEmployee').value.trim(),
-      notes: document.getElementById('newNotes').value.trim(),
-      rx: readRxFromTable(document.getElementById('newRxTable'))
-    };
-
-    data.unshift({
-      id: String(Date.now()),
-      name,
-      phone,
-      glasses: [firstGlasses]
-    });
-
-    save();
-    document.getElementById('newCustomerForm').reset();
-    document.getElementById('newDate').value = today();
-    renderList();
-  }
-
-  function toggleCustomer(id) {
-    if (openCustomerIds.has(id)) {
-      openCustomerIds.delete(id);
-    } else {
-      openCustomerIds.add(id);
-    }
-    renderList();
-  }
-
-  function toggleAddGlasses(id) {
-    openCustomerIds.add(id);
-    if (openAddGlassesIds.has(id)) {
-      openAddGlassesIds.delete(id);
-    } else {
-      openAddGlassesIds.add(id);
-    }
-    renderList();
-  }
-
-  function submitExtraGlasses(e, customerId) {
-    e.preventDefault();
-    const customer = data.find(c => c.id === customerId);
-    if (!customer) return;
-
-    const drawer = document.getElementById(`drawer-${customerId}`);
-    const extraGlasses = {
-      date: drawer.querySelector('.ex-date').value || today(),
-      lensFrame: drawer.querySelector('.ex-lensFrame').value.trim(),
-      price: drawer.querySelector('.ex-price').value.trim(),
-      branch: drawer.querySelector('.ex-branch').value.trim(),
-      employee: drawer.querySelector('.ex-employee').value.trim(),
-      notes: drawer.querySelector('.ex-notes').value.trim(),
-      rx: readRxFromTable(drawer.querySelector('.ex-rx-table'))
-    };
-
-    customer.glasses.push(extraGlasses);
-    openAddGlassesIds.delete(customerId);
-    openCustomerIds.add(customerId);
-    save();
-    renderList();
-  }
-
-  function deleteGlasses(customerId, index) {
-    const customer = data.find(c => c.id === customerId);
-    if (!customer) return;
-    if (customer.glasses.length <= 1) {
-      alert('يجب أن يبقى للزبون نظارة واحدة على الأقل، أو احذفي ملف الزبون بالكامل.');
-      return;
-    }
-    if (!confirm('هل تريدين حذف هذه النظارة؟')) return;
-    customer.glasses.splice(index, 1);
-    save();
-    renderList();
-  }
-
-  function deleteCustomer(id) {
-    if (!confirm('هل تريدين حذف بيانات هذا الزبون بالكامل؟')) return;
-    data = data.filter(c => c.id !== id);
-    openCustomerIds.delete(id);
-    openAddGlassesIds.delete(id);
-    save();
-    renderList();
-  }
-
-  function esc(v) {
-    return String(v ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  function renderList() {
-    const q = document.getElementById('searchBox').value.trim().toLowerCase();
-    const container = document.getElementById('customersContainer');
-    const list = data.filter(c =>
-      c.name.toLowerCase().includes(q) || c.phone.toLowerCase().includes(q)
-    );
-
-    document.getElementById('totalCount').textContent = `عدد الزبائن: ${list.length}`;
-
-    if (list.length === 0) {
-      container.innerHTML = `<div class="empty">لا توجد سجلات لعرضها.</div>`;
-      return;
-    }
-
-    container.innerHTML = list.map(c => {
-      const isOpen = openCustomerIds.has(c.id);
-      const isAdding = openAddGlassesIds.has(c.id);
-
-      const glassesHtml = c.glasses.map((g, idx) => `
-        <div class="glasses-card">
-          <div class="glasses-top">
-            <span>نظارة #${idx + 1} — ${esc(g.date || '')}</span>
-            ${c.glasses.length > 1
-              ? `<button type="button" class="btn btn-danger btn-sm" onclick="deleteGlasses('${c.id}', ${idx})">حذف النظارة</button>`
-              : ''}
+        <div class="grid-2">
+          <div>
+            <label for="name">اسم الزبون *</label>
+            <input type="text" id="name" required placeholder="أدخل اسم الزبون" />
           </div>
-          <div class="info-grid">
-            <div class="info-item"><strong>العدسة والإطار:</strong> ${esc(g.lensFrame || '-')}</div>
-            <div class="info-item"><strong>السعر:</strong> ${esc(g.price || '-')}</div>
-            <div class="info-item"><strong>الفرع:</strong> ${esc(g.branch || '-')}</div>
-            <div class="info-item"><strong>الموظف:</strong> ${esc(g.employee || '-')}</div>
-            <div class="info-item"><strong>الملاحظات:</strong> ${esc(g.notes || '-')}</div>
+          <div>
+            <label for="phone">رقم التليفون *</label>
+            <input type="tel" id="phone" required placeholder="أدخل رقم التليفون" />
           </div>
-          <table class="view-rx">
+        </div>
+
+        <div class="grid-3" style="margin-top:14px;">
+          <div>
+            <label for="date">التاريخ</label>
+            <input type="date" id="date" />
+          </div>
+          <div>
+            <label for="price">السعر</label>
+            <input type="text" id="price" placeholder="مثال: 50" />
+          </div>
+          <div>
+            <label for="branch">الفرع</label>
+            <input type="text" id="branch" placeholder="اسم الفرع" />
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:14px;">
+          <div>
+            <label for="lensFrame">تفاصيل العدسة والإطار</label>
+            <input type="text" id="lensFrame" placeholder="نوع العدسة وتفاصيل الإطار" />
+          </div>
+          <div>
+            <label for="employee">الموظف</label>
+            <input type="text" id="employee" placeholder="اسم الموظف" />
+          </div>
+        </div>
+
+        <div class="rx-table-wrap">
+          <table class="rx-table">
             <thead>
-              <tr><th>EYE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>IPD</th></tr>
+              <tr>
+                <th>EYE</th>
+                <th>SPH</th>
+                <th>CYL</th>
+                <th>AXIS</th>
+                <th>ADD</th>
+                <th>IPD</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>R</strong></td>
-                <td>${esc(g.rx?.R?.sph || '-')}</td>
-                <td>${esc(g.rx?.R?.cyl || '-')}</td>
-                <td>${esc(g.rx?.R?.axis || '-')}</td>
-                <td>${esc(g.rx?.R?.add || '-')}</td>
-                <td>${esc(g.rx?.R?.ipd || '-')}</td>
+                <td class="eye-label">R</td>
+                <td><input type="text" id="r_sph" /></td>
+                <td><input type="text" id="r_cyl" /></td>
+                <td><input type="text" id="r_axis" /></td>
+                <td><input type="text" id="r_add" /></td>
+                <td><input type="text" id="r_ipd" /></td>
               </tr>
               <tr>
-                <td><strong>L</strong></td>
-                <td>${esc(g.rx?.L?.sph || '-')}</td>
-                <td>${esc(g.rx?.L?.cyl || '-')}</td>
-                <td>${esc(g.rx?.L?.axis || '-')}</td>
-                <td>${esc(g.rx?.L?.add || '-')}</td>
-                <td>${esc(g.rx?.L?.ipd || '-')}</td>
+                <td class="eye-label">L</td>
+                <td><input type="text" id="l_sph" /></td>
+                <td><input type="text" id="l_cyl" /></td>
+                <td><input type="text" id="l_axis" /></td>
+                <td><input type="text" id="l_add" /></td>
+                <td><input type="text" id="l_ipd" /></td>
               </tr>
             </tbody>
           </table>
         </div>
-      `).join('');
 
-      return `
-        <div class="customer-row">
-          <button type="button" class="customer-trigger" onclick="toggleCustomer('${c.id}')">
-            <div class="c-main">
-              <span class="c-name">${esc(c.name)}</span>
-              <span class="c-phone">${esc(c.phone)}</span>
+        <div style="margin-top:14px;">
+          <label for="notes">ملاحظات</label>
+          <textarea id="notes" placeholder="أي ملاحظات إضافية..."></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn-primary" id="submitBtn">حفظ السجل</button>
+          <button type="button" class="btn-secondary" onclick="resetForm()">تفريغ الحقول</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>سجل الزبائن (<span id="count">0</span>)</h2>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="ابحث بالاسم أو رقم التليفون..." oninput="renderRecords()" />
+      </div>
+      <div id="recordsList"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'naqaa_optics_records_v1';
+    let records = [];
+
+    function loadRecords() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        records = saved ? JSON.parse(saved) : [];
+      } catch (e) {
+        records = [];
+      }
+    }
+
+    function persistRecords() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    }
+
+    function setTodayDate() {
+      const dateInput = document.getElementById('date');
+      if (!dateInput.value) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+    }
+
+    function saveRecord(e) {
+      e.preventDefault();
+      const editId = document.getElementById('editId').value;
+
+      const record = {
+        id: editId || String(Date.now()),
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        date: document.getElementById('date').value,
+        price: document.getElementById('price').value.trim(),
+        branch: document.getElementById('branch').value.trim(),
+        lensFrame: document.getElementById('lensFrame').value.trim(),
+        employee: document.getElementById('employee').value.trim(),
+        notes: document.getElementById('notes').value.trim(),
+        rx: {
+          R: {
+            sph: document.getElementById('r_sph').value.trim(),
+            cyl: document.getElementById('r_cyl').value.trim(),
+            axis: document.getElementById('r_axis').value.trim(),
+            add: document.getElementById('r_add').value.trim(),
+            ipd: document.getElementById('r_ipd').value.trim()
+          },
+          L: {
+            sph: document.getElementById('l_sph').value.trim(),
+            cyl: document.getElementById('l_cyl').value.trim(),
+            axis: document.getElementById('l_axis').value.trim(),
+            add: document.getElementById('l_add').value.trim(),
+            ipd: document.getElementById('l_ipd').value.trim()
+          }
+        }
+      };
+
+      if (editId) {
+        records = records.map(item => item.id === editId ? record : item);
+      } else {
+        records.unshift(record);
+      }
+
+      persistRecords();
+      resetForm();
+      renderRecords();
+    }
+
+    function editRecord(id) {
+      const item = records.find(r => r.id === id);
+      if (!item) return;
+
+      document.getElementById('editId').value = item.id;
+      document.getElementById('name').value = item.name || '';
+      document.getElementById('phone').value = item.phone || '';
+      document.getElementById('date').value = item.date || '';
+      document.getElementById('price').value = item.price || '';
+      document.getElementById('branch').value = item.branch || '';
+      document.getElementById('lensFrame').value = item.lensFrame || '';
+      document.getElementById('employee').value = item.employee || '';
+      document.getElementById('notes').value = item.notes || '';
+
+      document.getElementById('r_sph').value = item.rx?.R?.sph || '';
+      document.getElementById('r_cyl').value = item.rx?.R?.cyl || '';
+      document.getElementById('r_axis').value = item.rx?.R?.axis || '';
+      document.getElementById('r_add').value = item.rx?.R?.add || '';
+      document.getElementById('r_ipd').value = item.rx?.R?.ipd || '';
+
+      document.getElementById('l_sph').value = item.rx?.L?.sph || '';
+      document.getElementById('l_cyl').value = item.rx?.L?.cyl || '';
+      document.getElementById('l_axis').value = item.rx?.L?.axis || '';
+      document.getElementById('l_add').value = item.rx?.L?.add || '';
+      document.getElementById('l_ipd').value = item.rx?.L?.ipd || '';
+
+      document.getElementById('formTitle').textContent = 'تعديل بيانات الزبون';
+      document.getElementById('submitBtn').textContent = 'تحديث السجل';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function deleteRecord(id) {
+      if (!confirm('هل أنتِ متأكدة من حذف هذا السجل؟')) return;
+      records = records.filter(r => r.id !== id);
+      persistRecords();
+      renderRecords();
+    }
+
+    function resetForm() {
+      document.getElementById('customerForm').reset();
+      document.getElementById('editId').value = '';
+      document.getElementById('formTitle').textContent = 'إضافة زبون جديد';
+      document.getElementById('submitBtn').textContent = 'حفظ السجل';
+      setTodayDate();
+    }
+
+    function escapeHtml(text) {
+      return String(text || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderRecords() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filtered = records.filter(r =>
+        (r.name || '').toLowerCase().includes(query) ||
+        (r.phone || '').toLowerCase().includes(query)
+      );
+
+      document.getElementById('count').textContent = filtered.length;
+      const container = document.getElementById('recordsList');
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state">لا توجد سجلات مطابقة.</div>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(r => `
+        <div class="record-item">
+          <div class="record-header">
+            <div>
+              <div class="record-title">${escapeHtml(r.name)}</div>
+              <div class="record-phone">📞 ${escapeHtml(r.phone)}</div>
             </div>
-            <span class="c-badge">${c.glasses.length} نظارة ${isOpen ? '▲' : '▼'}</span>
-          </button>
-
-          <div class="customer-details ${isOpen ? 'open' : ''}">
-            ${glassesHtml}
-
-            <div class="customer-footer-actions">
-              <button type="button" class="btn btn-accent btn-sm" onclick="toggleAddGlasses('${c.id}')">
-                ➕ إضافة نظارة
-              </button>
-              <button type="button" class="btn btn-danger btn-sm" onclick="deleteCustomer('${c.id}')">
-                حذف الزبون
-              </button>
-            </div>
-
-            <div class="add-glasses-drawer ${isAdding ? 'open' : ''}" id="drawer-${c.id}">
-              <form onsubmit="submitExtraGlasses(event, '${c.id}')">
-                <div style="font-weight:700; color:var(--accent); margin-bottom:10px;">
-                  بيانات نظارة جديدة للزبون: ${esc(c.name)}
-                </div>
-                <div class="form-grid">
-                  <div class="field">
-                    <label>التاريخ</label>
-                    <input type="date" class="ex-date" value="${today()}" />
-                  </div>
-                  <div class="field">
-                    <label>السعر</label>
-                    <input type="text" class="ex-price" placeholder="السعر" />
-                  </div>
-                  <div class="field">
-                    <label>تفاصيل العدسة والإطار</label>
-                    <input type="text" class="ex-lensFrame" placeholder="نوع العدسة والإطار" />
-                  </div>
-                  <div class="field">
-                    <label>الفرع</label>
-                    <input type="text" class="ex-branch" placeholder="الفرع" />
-                  </div>
-                  <div class="field">
-                    <label>الموظف</label>
-                    <input type="text" class="ex-employee" placeholder="اسم الموظف" />
-                  </div>
-                  <div class="field">
-                    <label>الملاحظات</label>
-                    <input type="text" class="ex-notes" placeholder="ملاحظات" />
-                  </div>
-                </div>
-
-                <div class="rx-box">
-                  <table class="rx-table ex-rx-table">
-                    <thead>
-                      <tr><th>EYE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>IPD</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="eye">R</td>
-                        <td><input type="text" data-eye="R" data-field="sph" /></td>
-                        <td><input type="text" data-eye="R" data-field="cyl" /></td>
-                        <td><input type="text" data-eye="R" data-field="axis" /></td>
-                        <td><input type="text" data-eye="R" data-field="add" /></td>
-                        <td><input type="text" data-eye="R" data-field="ipd" /></td>
-                      </tr>
-                      <tr>
-                        <td class="eye">L</td>
-                        <td><input type="text" data-eye="L" data-field="sph" /></td>
-                        <td><input type="text" data-eye="L" data-field="cyl" /></td>
-                        <td><input type="text" data-eye="L" data-field="axis" /></td>
-                        <td><input type="text" data-eye="L" data-field="add" /></td>
-                        <td><input type="text" data-eye="L" data-field="ipd" /></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="actions-row">
-                  <button type="submit" class="btn btn-accent btn-sm">حفظ النظارة الجديدة</button>
-                  <button type="button" class="btn btn-outline btn-sm" onclick="toggleAddGlasses('${c.id}')">إلغاء</button>
-                </div>
-              </form>
+            <div class="actions" style="margin:0;">
+              <button class="btn-edit" onclick="editRecord('${r.id}')">تعديل</button>
+              <button class="btn-delete" onclick="deleteRecord('${r.id}')">حذف</button>
             </div>
           </div>
+
+          <div class="meta-grid">
+            <div><strong>التاريخ:</strong> ${escapeHtml(r.date || '-')}</div>
+            <div><strong>السعر:</strong> ${escapeHtml(r.price || '-')}</div>
+            <div><strong>الفرع:</strong> ${escapeHtml(r.branch || '-')}</div>
+            <div><strong>الموظف:</strong> ${escapeHtml(r.employee || '-')}</div>
+            <div style="grid-column: 1 / -1;"><strong>العدسة والإطار:</strong> ${escapeHtml(r.lensFrame || '-')}</div>
+            <div style="grid-column: 1 / -1;"><strong>ملاحظات:</strong> ${escapeHtml(r.notes || '-')}</div>
+          </div>
+
+          <div class="rx-table-wrap">
+            <table class="rx-table">
+              <thead>
+                <tr>
+                  <th>EYE</th>
+                  <th>SPH</th>
+                  <th>CYL</th>
+                  <th>AXIS</th>
+                  <th>ADD</th>
+                  <th>IPD</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="eye-label">R</td>
+                  <td>${escapeHtml(r.rx?.R?.sph || '-')}</td>
+                  <td>${escapeHtml(r.rx?.R?.cyl || '-')}</td>
+                  <td>${escapeHtml(r.rx?.R?.axis || '-')}</td>
+                  <td>${escapeHtml(r.rx?.R?.add || '-')}</td>
+                  <td>${escapeHtml(r.rx?.R?.ipd || '-')}</td>
+                </tr>
+                <tr>
+                  <td class="eye-label">L</td>
+                  <td>${escapeHtml(r.rx?.L?.sph || '-')}</td>
+                  <td>${escapeHtml(r.rx?.L?.cyl || '-')}</td>
+                  <td>${escapeHtml(r.rx?.L?.axis || '-')}</td>
+                  <td>${escapeHtml(r.rx?.L?.add || '-')}</td>
+                  <td>${escapeHtml(r.rx?.L?.ipd || '-')}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      `;
-    }).join('');
-  }
+      `).join('');
+    }
 
-  function exportData() {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `naqaa-optics-${today()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+    function exportData() {
+      const dataStr = JSON.stringify(records, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `naqaa-optics-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
 
-  function importData(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      try {
-        const parsed = JSON.parse(ev.target.result);
-        if (!Array.isArray(parsed)) throw new Error();
-        data = parsed.map(normalize);
-        save();
-        renderList();
-        alert('تم الاستيراد بنجاح.');
-      } catch {
-        alert('تعذر قراءة الملف.');
-      }
-      e.target.value = '';
-    };
-    reader.readAsText(file);
-  }
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!Array.isArray(imported)) {
+            alert('ملف النسخة الاحتياطية غير صالح.');
+            return;
+          }
+          records = imported;
+          persistRecords();
+          renderRecords();
+          alert('تم استيراد النسخة الاحتياطية بنجاح.');
+        } catch (err) {
+          alert('حدث خطأ أثناء قراءة الملف.');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
 
-  document.getElementById('newDate').value = today();
-  load();
-  renderList();
-</script>
+    loadRecords();
+    setTodayDate();
+    renderRecords();
+  </script>
 </body>
 </html>
